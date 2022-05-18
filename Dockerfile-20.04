@@ -1,0 +1,83 @@
+FROM ubuntu:20.04
+
+# Timezone
+ENV TZ="Europe/Paris"
+
+# Versions
+ENV NRF_SDK="17.1.0"
+ENV TOOLCHAIN="10.3-2021.10"
+
+VOLUME [ "/home" ]
+
+# Set the timezone
+RUN apt-get update && \
+    apt-get install tzdata -y
+
+# Update all
+RUN apt-get update && \
+    apt-get full-upgrade -y
+
+# Install essential packages
+RUN apt-get update && \
+    apt-get install -y build-essential \
+                       automake \
+                       autoconf \
+                       checkinstall \ 
+                       curl \
+                       wget \
+                       software-properties-common \ 
+                       less \
+                       ncdu \
+                       nmap \
+                       zsh \
+                       vim \
+                       git \
+                       unzip \
+                       usbutils \
+                       tmux \
+                       htop \
+                       neofetch \
+                       gdb && \
+    apt-get autoclean -y && \
+    apt-get autoremove -y
+
+# Powerlevel 10K
+WORKDIR /opt
+RUN git clone https://github.com/romkatv/powerlevel10k.git
+
+# Setup sudo
+RUN apt-get update && \
+    apt-get install -y sudo
+RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
+
+# Default for users
+WORKDIR /etc/skel
+COPY .zshrc .
+COPY .p10k.zsh .
+COPY .vimrc .
+COPY .tmux.conf .
+
+# Adjust root user
+WORKDIR /root
+RUN chsh -s /bin/zsh root && \
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+COPY .zshrc .
+COPY .p10k.zsh .
+COPY .vimrc .
+COPY .tmux.conf .
+RUN vim +'PlugInstall --sync' +qa && \
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
+    tmux -c 'tmux source ~/.tmux.conf' && \
+    tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'
+
+# Add vscode user
+RUN useradd -s /bin/zsh -m vscode \
+ && groupadd docker \
+ && usermod -aG docker vscode
+USER vscode
+WORKDIR /home/vscode
+RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN vim +'PlugInstall --sync' +qa && \
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
+    tmux -c 'tmux source ~/.tmux.conf' && \
+    tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'

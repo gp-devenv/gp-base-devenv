@@ -1,0 +1,58 @@
+{
+  "name": "base-devenv",
+  "version": "0.1.0",
+  "description": "Build and upload Docker dev envrionment suitable Visual Studio Code dev containers",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:20.04 && npm run build:22.04",
+    "buildx": "npm run buildx:20.04 && npm run buildx:22.04",
+    "push": "npm run push:20.04 && npm run push:22.04",
+    "scan": "npm run scan:20.04 && npm run scan:22.04",
+    "start:20.04": "docker run --name base-devenv-$npm_package_version-test -it gpfister/base-devenv:20.04-$npm_package_version /bin/zsh",
+    "start:20.04:develop": "docker run --name base-devenv-develop-test -it gpfister/base-devenv:20.04-develop /bin/zsh",
+    "build:20.04": "npm run build:20.04:version && npm run build:20.04:latest",
+    "build:20.04:version": "docker build --no-cache -t gpfister/base-devenv:20.04-$npm_package_version -f Dockerfile-20.04 .",
+    "build:20.04:latest": "docker build -t gpfister/base-devenv:20.04-latest -f Dockerfile-20.04 .",
+    "build:20.04:develop": "docker build --no-cache -t gpfister/base-devenv:20.04-develop -f Dockerfile-20.04 .",
+    "buildx:20.04": "npm run buildx:20.04:version && npm run buildx:20.04:latest",
+    "buildx:20.04:version": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:20.04-$npm_package_version -f Dockerfile-20.04 .",
+    "buildx:20.04:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:20.04-latest -f Dockerfile-20.04 .",
+    "buildx:20.04:develop": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:20.04-develop -f Dockerfile-20.04 .",
+    "scan:20.04": "docker scan -f Dockerfile-20.04 gpfister/base-devenv:20.04-$npm_package_version",
+    "push:20.04": "npm run push:20.04:version && npm run push:20.04:latest",
+    "push:20.04:version": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:20.04-$npm_package_version --push -f Dockerfile-20.04 .",
+    "push:20.04:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:20.04-latest --push -f Dockerfile-20.04 .",
+    "start:22.04": "docker run --name base-devenv-$npm_package_version-test -it gpfister/base-devenv:22.04-$npm_package_version /bin/zsh",
+    "start:22.04:develop": "docker run --name base-devenv-develop-test -it gpfister/base-devenv:22.04-develop /bin/zsh",
+    "build:22.04": "npm run build:22.04:version && npm run build:22.04:latest",
+    "build:22.04:version": "docker build --no-cache -t gpfister/base-devenv:22.04-$npm_package_version -f Dockerfile-22.04 .",
+    "build:22.04:latest": "docker build -t gpfister/base-devenv:22.04-latest -f Dockerfile-22.04 .",
+    "build:22.04:develop": "docker build --no-cache -t gpfister/base-devenv:22.04-develop -f Dockerfile-22.04 .",
+    "buildx:22.04": "npm run buildx:22.04:version && npm run buildx:22.04:latest",
+    "buildx:22.04:version": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:22.04-$npm_package_version -f Dockerfile-22.04 .",
+    "buildx:22.04:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:22.04-latest -f Dockerfile-22.04 .",
+    "buildx:22.04:develop": "docker buildx build --no-cache --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:22.04-develop -f Dockerfile-22.04 .",
+    "scan:22.04": "docker scan -f Dockerfile-22.04 gpfister/base-devenv:22.04-$npm_package_version",
+    "push:22.04": "npm run push:22.04:version && npm run push:22.04:latest",
+    "push:22.04:version": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:22.04-$npm_package_version --push -f Dockerfile-22.04 .",
+    "push:22.04:latest": "docker buildx build --platform --linux/arm64,linux/amd64,linux/arm/v7 -t gpfister/base-devenv:22.04-latest --push -f Dockerfile-22.04 ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpfister/base-devenv.git"
+  },
+  "keywords": [
+    "docker",
+    "dev",
+    "environment",
+    "devenv",
+    "c++",
+    "nrf"
+  ],
+  "author": "Greg PFISTER",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gpfister/base-devenv/issues"
+  },
+  "homepage": "https://github.com/gpfister/base-devenv#readme"
+}
