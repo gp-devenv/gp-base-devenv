@@ -4,7 +4,6 @@
 
 [![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](./LICENSE)
 [![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](./LICENSE)
-[![AMD64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)](./LICENSE)
 
 # Base Dev Environment
 
