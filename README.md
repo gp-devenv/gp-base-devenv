@@ -6,7 +6,7 @@
 [![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](./LICENSE)
 [![AMD64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)](./LICENSE)
 
-# NRF Dev Environment
+# Base Dev Environment
 
 Copyright (c) 2022, Greg PFISTER. MIT License
 
