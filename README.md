@@ -44,7 +44,13 @@ user will not be persisted.
 
 ## Build, scan and push
 
-### A word about in progress developments
+### Image name and version
+
+Image name contains the Ubuntu version and the image version, using the format
+`<Image name>:<Ubuntu version>-<Image version>`. The version is therefore the
+combination of both the Ubuntu version and the image version (e.g. 22.04-0.1.0).
+
+### A word about developments
 
 When you are making change to the image, use :develop at the end of the
 [build](#build), [run](#run) and [scan](#scan) commands. The `develop` tag
@@ -84,7 +90,8 @@ Platforms: linux/arm64, linux/amd64, linux/amd64/v2, linux/riscv64,
            linux/arm/v7, linux/arm/v6
 ```
 
-`Ubuntu 20.04` been exclusively x64, only x64 architecture must be considered.
+`Ubuntu` (both 20.04 and 22.04) been exclusively x64, only x64 architecture are
+supported.
 
 <div id="build" />
 
@@ -101,10 +108,11 @@ It will create and image `gpfister/nrf-devenv` tagged with the version in the
 `package.json` file and `latest`. For example:
 
 ```sh
-$ sdocker images
-REPOSITORY                                                TAG       IMAGE ID       CREATED          SIZE
-gpfister/nrf-devenv                                       0.1.0     5fe9772cc4d1   23 minutes ago   1.28GB
-gpfister/nrf-devenv                                       latest    5fe9772cc4d1   23 minutes ago   1.28GB
+REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
+gpfister/base-devenv             22.04-0.1.0       21a32a4c2177   11 minutes ago   916MB
+gpfister/base-devenv             22.04-latest      21a32a4c2177   11 minutes ago   916MB
+gpfister/base-devenv             20.04-0.1.0       466450fda71c   12 minutes ago   873MB
+gpfister/base-devenv             20.04-latest      466450fda71c   12 minutes ago   873MB
 ```
 
 You may alter the `package.json` should you want to have different tags or
@@ -119,7 +127,7 @@ scripts.
 To run an interactive container, simple use:
 
 ```sh
-$ npm run start
+$ npm run start:<Ubuntu version>
 ```
 
 It should create a container and name it `nrf-devenv-<VERSION>-test`.
