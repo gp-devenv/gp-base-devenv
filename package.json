@@ -1,7 +1,7 @@
 {
   "name": "base-devenv",
   "version": "0.1.0",
-  "description": "Build and upload Docker dev envrionment suitable Visual Studio Code dev containers",
+  "description": "Base image for build Ubuntu based (20.04 or 22.04) dev containers for VS Code",
   "main": "index.js",
   "scripts": {
     "build": "npm run build:20.04 && npm run build:22.04",

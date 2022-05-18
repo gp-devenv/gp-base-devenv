@@ -1,9 +1,10 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-20.04-orange)](https://ubuntu.com)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
+[![Docker](https://img.shields.io/badge/docker-hub-blue)](https://hub.docker.com/repository/docker/gpfister/base-devenv)
 
-[![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](./LICENSE)
-[![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](./LICENSE)
+[![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/base-devenv/tags)
+[![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/base-devenv/tags)
 
 # Base Dev Environment
 
@@ -27,6 +28,13 @@ Along with the basic requirements, the image provides:
 - a `vscode` user account
 - `sudo` passwordless commands
 - `tmux`
+
+The image can be found on [Docker Hub](https://hub.docker.com/repository/docker/gpfister/base-devenv).
+
+The following image are using this base image:
+
+- [firebase-devenv](https://hub.docker.com/repository/docker/gpfister/firebase-devenv):
+  Provide a base image to build a Firebase dev container for VS Code.
 
 <div id="volumes" />
 
@@ -160,12 +168,22 @@ USER root
 # Reconfigure tzdata
 RUN dpkg-reconfigure -f noninteractive tzdata
 
+# Update all packages
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get autoclean
+
 # Switch back to vscode
 USER vscode
 ```
 
-**Important:** unless you really want to use the root user, you should always
-make sure the `vscode` is the last one activate.
+**Important:** Unless you really want to use the root user, you should always
+make sure the `vscode` is the last one activated.
+
+**Updating the image:** There is yet no plan to create nighly build, ensuring
+the image is always up to date. Therefore, when building yours from this one,
+run the update process.
 
 <div id="faq" />
 
