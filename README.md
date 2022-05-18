@@ -29,7 +29,8 @@ Along with the basic requirements, the image provides:
 - `sudo` passwordless commands
 - `tmux`
 
-The image can be found on [Docker Hub](https://hub.docker.com/repository/docker/gpfister/base-devenv).
+The image can be found on
+[Docker Hub](https://hub.docker.com/repository/docker/gpfister/base-devenv).
 
 The following image are using this base image:
 
@@ -51,11 +52,10 @@ user will not be persisted.
 
 ## Build, scan and push
 
-### Image name and version
+### A word about image version formatting
 
-Image name contains the Ubuntu version and the image version, using the format
-`<Image name>:<Ubuntu version>-<Image version>`. The version is therefore the
-combination of both the Ubuntu version and the image version (e.g. 22.04-0.1.0).
+Image version contains the Ubuntu version and the build version, using the format
+`<Ubuntu version>-<Build version>` (e.g. 22.04-0.1.0).
 
 ### A word about developments
 
