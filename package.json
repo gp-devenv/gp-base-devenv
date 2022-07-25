@@ -1,6 +1,6 @@
 {
   "name": "base-devenv",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Base image for build Ubuntu based (20.04 or 22.04) dev containers for VS Code",
   "main": "index.js",
   "scripts": {

@@ -21,7 +21,7 @@ This is image is provided with both Ubuntu 20.04 and Ubuntu 22.04.
 
 Along with the basic requirements, the image provides:
 
-- zsh
+- zsh + starship
 - vim with a few plugins (airline, syntastic, ripgrep, nerdcommenter,
   vim-colorschemes, ctrlp.vim)
 - additionnal tools like `less`, `curl`, `nmap`, `htop`, ...
