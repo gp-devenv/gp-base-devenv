@@ -3,10 +3,6 @@ FROM ubuntu:22.04
 # Timezone
 ENV TZ="Europe/Paris"
 
-# Versions
-ENV NRF_SDK="17.1.0"
-ENV TOOLCHAIN="10.3-2021.10"
-
 VOLUME [ "/home" ]
 
 # Set the timezone
@@ -41,21 +37,10 @@ RUN apt-get update && \
     apt-get autoclean -y && \
     apt-get autoremove -y
 
-# Powerlevel 10K
-WORKDIR /opt
-RUN git clone https://github.com/romkatv/powerlevel10k.git
-
-# # NRF5 SDK
-# RUN curl -L https://www.nordicsemi.com/-/media/Software-and-other-downloads/SDKs/nRF5/Binaries/nRF5_SDK_${NRF_SDK}_ddde560.zip -o sdk.zip && \
-#     unzip sdk.zip && \
-#     mv nRF5_SDK* nRF5_SDK && \
-#     rm sdk.zip
-
-# # Toolchain
-# RUN curl -L https://developer.arm.com/-/media/Files/downloads/gnu-rm/${TOOLCHAIN}/gcc-arm-none-eabi-${TOOLCHAIN}-`uname -m`-linux.tar.bz2 -o toolchain.tar.bz2 && \
-#     tar xvfj toolchain.tar.bz2 && \
-#     mv gcc-arm-none-eabi* gcc-arm-none-eabi && \
-#     rm toolchain.tar.bz2
+# Starship
+RUN curl -sS https://starship.rs/install.sh -o install.sh && \
+    sh install.sh --yes && \
+    rm install.sh
 
 # Setup sudo
 RUN apt-get update && \
@@ -65,18 +50,20 @@ RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
 # Default for users
 WORKDIR /etc/skel
 COPY .zshrc .
-COPY .p10k.zsh .
 COPY .vimrc .
 COPY .tmux.conf .
+RUN mkdir /etc/skel/.config
+COPY starship.toml /etc/skel/.config
 
 # Adjust root user
 WORKDIR /root
 RUN chsh -s /bin/zsh root && \
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 COPY .zshrc .
-COPY .p10k.zsh .
 COPY .vimrc .
 COPY .tmux.conf .
+RUN mkdir ~/.config
+COPY starship.toml /etc/skel/.config
 RUN vim +'PlugInstall --sync' +qa && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     tmux -c 'tmux source ~/.tmux.conf' && \
