@@ -26,6 +26,11 @@ RUN rm -rf scripts
 RUN apt-get update && \
     apt-get install tzdata -y
 
+# Set locales
+RUN apt-get update && \
+    apt-get install locales && \
+    dpkg-reconfigure locales
+
 # Update all
 RUN apt-get update && \
     apt-get full-upgrade -y
@@ -69,6 +74,7 @@ WORKDIR /etc/skel
 COPY dist/.zshrc .
 COPY dist/.vimrc .
 COPY dist/.tmux.conf .
+COPY dist/setup.sh .
 RUN mkdir /etc/skel/.config
 COPY dist/starship.toml /etc/skel/.config
 RUN curl -fLo /etc/skel/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -76,17 +82,15 @@ RUN git clone https://github.com/tmux-plugins/tpm /etc/skel/.tmux/plugins/tpm
 
 # Adjust root user
 WORKDIR /root
-RUN chsh -s /bin/zsh root && \
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN chsh -s /bin/zsh root
 COPY dist/.zshrc .
 COPY dist/.vimrc .
 COPY dist/.tmux.conf .
+COPY dist/setup.sh .
 RUN mkdir ~/.config
 COPY dist/starship.toml /etc/skel/.config
-RUN vim +'PlugInstall --sync' +qa && \
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
-    tmux -c 'tmux source ~/.tmux.conf' && \
-    tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'
+RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Add vscode user
 RUN useradd -s /bin/zsh -m vscode \
@@ -94,6 +98,3 @@ RUN useradd -s /bin/zsh -m vscode \
  && usermod -aG docker vscode
 USER vscode
 WORKDIR /home/vscode
-RUN vim +'PlugInstall --sync' +qa && \   
-    tmux -c 'tmux source ~/.tmux.conf' && \
-    tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'

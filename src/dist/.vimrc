@@ -1,7 +1,5 @@
 " https://blog.envylabs.com/osx-vim-setup-for-a-designer-front-end-dev-566aa0690e84
 
-call plug#begin('~/.vim/plugged')
-
 " Vim Plug
 call plug#begin('~/.vim/plugged')
 
