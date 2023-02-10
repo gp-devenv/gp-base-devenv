@@ -16,7 +16,7 @@
 set -e
 
 VERSION=`cat .version`
-DOCKERFILE=`echo "./Dockerfile-"$1`
+DOCKERFILE=`echo "./Dockerfile.ubuntu-"$1`
 IMAGE="gpfister/gp-base-devenv:$1-$VERSION"
 IMAGE_LATEST="gpfister/gp-base-devenv:$1-latest"
 IMAGE_VERSION_LATEST="gpfister/gp-base-devenv:$1-$VERSION-latest"

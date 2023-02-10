@@ -16,7 +16,7 @@
 set -e
 
 VERSION="`cat .version`-dev"
-DOCKERFILE=`echo "./Dockerfile-"$1`
+DOCKERFILE=`echo "./Dockerfile.ubuntu-"$1`
 IMAGE="gpfister/gp-base-devenv:$1-$VERSION"
 
 if [ ! -f "$DOCKERFILE" ]; then

@@ -11,7 +11,7 @@
 # SOFTWARE.
 #
 
-FROM ubuntu:20.04
+FROM ubuntu:20.04 as base
 
 # Timezone
 ENV TZ="Europe/Paris"
