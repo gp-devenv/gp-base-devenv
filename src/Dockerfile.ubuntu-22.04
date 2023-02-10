@@ -16,6 +16,7 @@ FROM ubuntu:22.04
 # Timezone
 ENV TZ="Europe/Paris"
 
+# For persistent volumes
 VOLUME [ "/home" ]
 
 # Remove unwanted files (not possible via .dockerignore)
