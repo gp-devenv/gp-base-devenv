@@ -79,14 +79,13 @@ In order to build x-platform, `docker buildx` must be enabled (more info
 You will need to create a multiarch builder:
 
 ```sh
-$ docker buildx create --name multiarch
+./src/scripts/buildx/setup.sh
 ```
 
-Then, prior to building, you need to use it (example output on Mac M1):
+Up successful completion, it should at least have platforms `linux/arm64` and 
+`linux/amd64`:
 
 ```sh
-$ docker buildx use multiarch && docker buildx inspect --bootstrap
-
 [+] Building 5.8s (1/1) FINISHED
  => [internal] booting buildkit                                             5.8s
  => => pulling image moby/buildkit:buildx-stable-1                            7s
@@ -103,63 +102,62 @@ Platforms: linux/arm64, linux/amd64, linux/amd64/v2, linux/riscv64,
            linux/arm/v7, linux/arm/v6
 ```
 
-`Ubuntu` (both 20.04 and 22.04) been exclusively x64, only x64 architecture are
-supported.
-
 #### Build commands
 
 Once the previous step is completed, simpy run to build the current version:
 
 ```sh
-docker buildx build --platform linux/arm64,linux/amd64 -t gpfister/base-devenv:20.04-`cat .version` -f Dockerfile-20.04 .
-docker buildx build --platform linux/arm64,linux/amd64 -t gpfister/base-devenv:22.04-`cat .version` -f Dockerfile-22.04 .
+(cd src && ./scripts/buildx/build.sh)
 ```
 
 <div id="build" />
 
-### Build using local architecture
+### Build using local architecture (for local testing)
 
-To build the image for upload, using the versionning in `package.json`, simply
-run:
+To build using a specific Ubuntu version, use:
 
 ```sh
-$ npm run build
+(cd scr && ./scripts/dev/build.sh <UBUNTU_VERSION>)
 ```
 
-It will create and image `gpfister/nrf-devenv` tagged with the version in the
-`package.json` file and `latest`. For example:
+where `UBUNTU_VERSION` can be 20.04 or 22.04.
+
+It will create and image `gpfister/gp-base-devenv` tagged with the current 
+version (see `src/.version` file) and `-dev` suffix. For example:
 
 ```sh
 REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
-gpfister/base-devenv             22.04             21a32a4c2177   11 minutes ago   916MB
-gpfister/base-devenv             20.04             466450fda71c   12 minutes ago   873MB
+gpfister/base-devenv             22.04-1.0.0-dev   21a32a4c2177   11 minutes ago   916MB
+gpfister/base-devenv             20.04-1.0.0-dev   466450fda71c   12 minutes ago   873MB
 ```
 
-You may alter the `package.json` should you want to have different tags or
+You may alter the `.src/.version` file should you want to have different tags or
 names, however if you PR your change, it will be rejected. The ideal solution
-is to run the `docker build` command instead of the changing the provided
-scripts.
+is to run the `docker build` command instead.
 
 <div id="run" />
 
 ## Run a container
 
-To run an interactive container, simple use:
+To run an interactive container of a give Ubuntu version, simple use:
 
-| Ubuntu       | Command                                                                        |
-| ------------ | ------------------------------------------------------------------------------ |
-| Ubunto 20.04 |  `docker build --no-cache -t gpfister/base-devenv:20.04 -f Dockerfile-20.04 .` |
-| Ubunto 22.04 |  `docker build --no-cache -t gpfister/base-devenv:22.04 -f Dockerfile-22.04 .` |
+```sh
+(cd src && ./scripts/dev/start.sh <UBUNTU_VERSION>)
+```
+
+where `UBUNTU_VERSION` can be 20.04 or 22.04.
 
 <div id="scan" />
 
 ### Scan
 
-To scan the image, simple run:
+To scan the image of a give Ubuntu version, simple use:
 
 ```sh
-npm run scan
+(cd src && ./scripts/dev/scan.sh <UBUNTU_VERSION>)
 ```
+
+where `UBUNTU_VERSION` can be 20.04 or 22.04.
 
 <div id="build-from-this-image" />
 
@@ -170,7 +168,7 @@ image. For example, here's the way to set the image to a different timezone than
 "Europe/Paris" (the default one):
 
 ```Dockerfile
-FROM gpfister/nrf-devenv:latest
+FROM gpfister/gp-base-devenv:22.04-latest
 
 ENV TZ="America/New_York"
 
@@ -211,7 +209,7 @@ You will have to [build from this image](#build-from-this-image) to disable the
 the password less sudo command. Typically create a `Dockerfile` like:
 
 ```Dockerfile
-FROM gpfister/nrf-devenv:latest
+FROM gpfister/gp-base-devenv:22.04-latest
 
 ARG VSCODE_PASSWORD="dummy"
 
@@ -246,6 +244,12 @@ RUN rm /etc/sudoers.d/vscode && \
 USER vscode
 ```
 
+<div id="known_issues" />
+
+## Known issues
+
+See known issues [here](./KNOWN_ISSUES.md).
+
 <div id="contrib" />
 
 ## Contributions
@@ -263,4 +267,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-See license [here](./LICENSE).
+See license [here](./LICENSE.md).
