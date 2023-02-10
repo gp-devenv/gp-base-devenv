@@ -32,6 +32,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup buildx
-        run: ./src/scripts/setup.sh
+        run: (cd src && ./scripts/buildx/setup.sh)
       - name: Build for Ubuntu ${{ matrix.ubuntu-version }}
-        run: (cd src && ./scripts/buildx.sh ${{ matrix.ubuntu-version }})
+        run: (cd src && ./scripts/buildx/buildx.sh ${{ matrix.ubuntu-version }})
