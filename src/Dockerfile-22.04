@@ -1,9 +1,25 @@
+#
+# gp-base-devenv
+# Copyright (c) 2022-2023, Greg PFISTER. MIT License.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
 FROM ubuntu:22.04
 
 # Timezone
 ENV TZ="Europe/Paris"
 
 VOLUME [ "/home" ]
+
+# Remove unwanted files (not possible via .dockerignore)
+RUN rm -rf scripts
 
 # Set the timezone
 RUN apt-get update && \
@@ -49,21 +65,21 @@ RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
 
 # Default for users
 WORKDIR /etc/skel
-COPY .zshrc .
-COPY .vimrc .
-COPY .tmux.conf .
+COPY dist/.zshrc .
+COPY dist/.vimrc .
+COPY dist/.tmux.conf .
 RUN mkdir /etc/skel/.config
-COPY starship.toml /etc/skel/.config
+COPY dist/starship.toml /etc/skel/.config
 
 # Adjust root user
 WORKDIR /root
 RUN chsh -s /bin/zsh root && \
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-COPY .zshrc .
-COPY .vimrc .
-COPY .tmux.conf .
+COPY dist/.zshrc .
+COPY dist/.vimrc .
+COPY dist/.tmux.conf .
 RUN mkdir ~/.config
-COPY starship.toml /etc/skel/.config
+COPY dist/starship.toml /etc/skel/.config
 RUN vim +'PlugInstall --sync' +qa && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     tmux -c 'tmux source ~/.tmux.conf' && \

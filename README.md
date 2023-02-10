@@ -57,13 +57,19 @@ user will not be persisted.
 Image version contains the Ubuntu version and the build version, using the format
 `<Ubuntu version>-<Build version>` (e.g. 22.04-0.1.0).
 
+For CI/CD, the version is store in `.version` file.
+
+The version is in the format [SemVer](https://en.wikipedia.org/wiki/Software_versioning#Semantic_versioning).
+
 ### A word about developments
 
 When you are making change to the image, use :develop at the end of the
 [build](#build), [run](#run) and [scan](#scan) commands. The `develop` tag
 should not be pushed...
 
-### A word about cross-platform building
+### Cross-platform building
+
+#### Setup
 
 In order to build x-platform, `docker buildx` must be enabled (more info
 [here](https://docs.docker.com/buildx/working-with-buildx/)). Then, instead of
@@ -100,9 +106,18 @@ Platforms: linux/arm64, linux/amd64, linux/amd64/v2, linux/riscv64,
 `Ubuntu` (both 20.04 and 22.04) been exclusively x64, only x64 architecture are
 supported.
 
+#### Build commands
+
+Once the previous step is completed, simpy run to build the current version:
+
+```sh
+docker buildx build --platform linux/arm64,linux/amd64 -t gpfister/base-devenv:20.04-`cat .version` -f Dockerfile-20.04 .
+docker buildx build --platform linux/arm64,linux/amd64 -t gpfister/base-devenv:22.04-`cat .version` -f Dockerfile-22.04 .
+```
+
 <div id="build" />
 
-### Build
+### Build using local architecture
 
 To build the image for upload, using the versionning in `package.json`, simply
 run:
@@ -116,10 +131,8 @@ It will create and image `gpfister/nrf-devenv` tagged with the version in the
 
 ```sh
 REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
-gpfister/base-devenv             22.04-0.1.0       21a32a4c2177   11 minutes ago   916MB
-gpfister/base-devenv             22.04-latest      21a32a4c2177   11 minutes ago   916MB
-gpfister/base-devenv             20.04-0.1.0       466450fda71c   12 minutes ago   873MB
-gpfister/base-devenv             20.04-latest      466450fda71c   12 minutes ago   873MB
+gpfister/base-devenv             22.04             21a32a4c2177   11 minutes ago   916MB
+gpfister/base-devenv             20.04             466450fda71c   12 minutes ago   873MB
 ```
 
 You may alter the `package.json` should you want to have different tags or
@@ -133,11 +146,10 @@ scripts.
 
 To run an interactive container, simple use:
 
-```sh
-$ npm run start:<Ubuntu version>
-```
-
-It should create a container and name it `nrf-devenv-<VERSION>-test`.
+| Ubuntu       | Command                                                                        |
+| ------------ | ------------------------------------------------------------------------------ |
+| Ubunto 20.04 |  `docker build --no-cache -t gpfister/base-devenv:20.04 -f Dockerfile-20.04 .` |
+| Ubunto 22.04 |  `docker build --no-cache -t gpfister/base-devenv:22.04 -f Dockerfile-22.04 .` |
 
 <div id="scan" />
 
