@@ -11,25 +11,4 @@
 # SOFTWARE.
 #
 
-# Build and validate
-
-name: CI
-
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        ubuntu-version: ['20.04', '22.04']
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build for Ubuntu ${{ matrix.ubuntu-version }}
-        run: (cd src && ./scripts/dev/build.sh ${{ matrix.ubuntu-version }})
+# Push to docker

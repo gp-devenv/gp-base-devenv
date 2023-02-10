@@ -71,6 +71,8 @@ COPY dist/.vimrc .
 COPY dist/.tmux.conf .
 RUN mkdir /etc/skel/.config
 COPY dist/starship.toml /etc/skel/.config
+RUN curl -fLo /etc/skel/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN git clone https://github.com/tmux-plugins/tpm /etc/skel/.tmux/plugins/tpm
 
 # Adjust root user
 WORKDIR /root
@@ -92,8 +94,6 @@ RUN useradd -s /bin/zsh -m vscode \
  && usermod -aG docker vscode
 USER vscode
 WORKDIR /home/vscode
-RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-RUN vim +'PlugInstall --sync' +qa && \
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
+RUN vim +'PlugInstall --sync' +qa && \   
     tmux -c 'tmux source ~/.tmux.conf' && \
     tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'
