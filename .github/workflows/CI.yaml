@@ -34,4 +34,4 @@ jobs:
       - name: Setup buildx
         run: (cd src && ./scripts/buildx/setup.sh)
       - name: Build for Ubuntu ${{ matrix.ubuntu-version }}
-        run: (cd src && ./scripts/buildx/buildx.sh ${{ matrix.ubuntu-version }})
+        run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntu-version }})
