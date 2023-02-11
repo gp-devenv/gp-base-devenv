@@ -33,8 +33,8 @@ jobs:
       - name: Setup buildx
         run: (cd src && ./scripts/buildx/setup.sh)
       - name: Authenticating
-        run: echo $CI_WORKFLOW_GITHUB | docker login ghcr.io -u gpfister --password-stdin
+        run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
-          CI_WORKFLOW_GITHUB: ${{secret.CI_WORKFLOW_GITHUB}}
+          GHCR_IO_TOKEN: ${{secret.ghcr_io_token}}
       - name: Build and push using Ubuntu ${{ matrix.ubuntu-version }}
         run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntu-version }})
