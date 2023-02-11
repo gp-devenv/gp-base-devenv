@@ -18,11 +18,11 @@ name: CD
 on:
   release:
     types: [published]
-  # schedule:
-  #   - cron:  '0 0 * * *'
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
