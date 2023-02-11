@@ -13,13 +13,13 @@
 
 # Build and validate
 
-name: CI
+name: CD
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+  release:
+    types: [published]
+  # schedule:
+  #   - cron:  '0 0 * * *'
 
 jobs:
   build:
@@ -30,5 +30,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build for Ubuntu ${{ matrix.ubuntu-version }}
-        run: (cd src && ./scripts/dev/build.sh ${{ matrix.ubuntu-version }})
+      - name: Setup buildx
+        run: (cd src && ./scripts/buildx/setup.sh)
+      - name: Authenticating
+        run: echo $CI_WORKFLOW_GITHUB | docker login ghcr.io -u gpfister --password-stdin
+        env:
+          CI_WORKFLOW_GITHUB: ${{secret.CI_WORKFLOW_GITHUB}}
+      - name: Build and push using Ubuntu ${{ matrix.ubuntu-version }}
+        run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntu-version }})

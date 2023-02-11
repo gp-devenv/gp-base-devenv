@@ -17,10 +17,11 @@ set -e
 
 VERSION=`cat .version`
 DOCKERFILE=`echo "./Dockerfile.ubuntu-"$1`
-IMAGE="gpfister/gp-base-devenv:$1"
-IMAGE_LATEST="gpfister/gp-base-devenv:$1-latest"
-IMAGE_VERSION="gpfister/gp-base-devenv:$1-$VERSION"
-IMAGE_VERSION_LATEST="gpfister/gp-base-devenv:$1-$VERSION-latest"
+IMAGE_NAME="`cat .image_name`"
+IMAGE="$IMAGE_NAME:$1"
+IMAGE_LATEST="$IMAGE_NAME:$1-latest"
+IMAGE_VERSION="$IMAGE_NAME:$1-$VERSION"
+IMAGE_VERSION_LATEST="$IMAGE_NAME:$1-$VERSION-latest"
 
 if [ ! -f "$DOCKERFILE" ]; then
     echo "Dockerfile '$DOCKERFILE' not found"

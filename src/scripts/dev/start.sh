@@ -16,7 +16,8 @@
 set -e
 
 VERSION=`cat .version`-dev
-IMAGE="gpfister/gp-base-devenv:$1-$VERSION"
-CONTAINER="gp-base-devenv-$1-$VERSION"
+IMAGE_NAME="`cat .image_name`"
+IMAGE="$IMAGE_NAME:$1-$VERSION"
+CONTAINER="`cat .image_name | sed -e 's/gpfister\///g'`-$1-$VERSION"
 
 docker run --name $CONTAINER -it $IMAGE /bin/zsh
