@@ -1,14 +1,13 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-20.04-orange)](https://ubuntu.com)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
-[![Docker](https://img.shields.io/badge/docker-hub-blue)](https://hub.docker.com/repository/docker/gpfister/base-devenv)
 
 [![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/base-devenv/tags)
 [![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/base-devenv/tags)
 
 # Base Dev Environment
 
-Copyright (c) 2022, Greg PFISTER. MIT License
+Copyright (c) 2023, Greg PFISTER. MIT License
 
 <div id="about" />
 
@@ -142,8 +141,8 @@ version (see `src/.version` file) and `-dev` suffix. For example:
 
 ```sh
 REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
-gpfister/base-devenv             22.04-1.0.0-dev   21a32a4c2177   11 minutes ago   916MB
-gpfister/base-devenv             20.04-1.0.0-dev   466450fda71c   12 minutes ago   873MB
+gpfister/gp-base-devenv          22.04-1.0.0-dev   21a32a4c2177   11 minutes ago   916MB
+gpfister/gp-base-devenv          20.04-1.0.0-dev   466450fda71c   12 minutes ago   873MB
 ```
 
 You may alter the `.src/.version` file should you want to have different tags or
