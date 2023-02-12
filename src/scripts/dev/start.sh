@@ -20,7 +20,7 @@ IMAGE_NAME=$(cat .image_name)
 IMAGE="$IMAGE_NAME:$1-$VERSION"
 CONTAINER=$(echo "`cat .image_name | sed -e 's/ghcr.io\///g' -e 's/gpfister\///g'`-$1-$VERSION")
 
-docker run --user 1000:1000 \
+docker run --user vscode \
            --name $CONTAINER \
            -i -t \
            $IMAGE \
