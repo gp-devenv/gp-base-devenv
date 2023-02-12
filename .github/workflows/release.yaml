@@ -13,13 +13,11 @@
 
 # Build and validate
 
-name: CD
+name: release
 
 on:
   release:
     types: [published]
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   deploy:
@@ -27,7 +25,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        ubuntu-version: ['20.04', '22.04']
+        ubuntu_version: ['20.04', '22.04']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,5 +35,5 @@ jobs:
         run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
-      - name: Build using ubuntu:${{ matrix.ubuntu-version }} and push
-        run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntu-version }})
+      - name: Build using ubuntu:${{ matrix.ubuntu_version }} and push
+        run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntu_version }})
