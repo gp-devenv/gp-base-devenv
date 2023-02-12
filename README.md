@@ -182,7 +182,7 @@ image. For example, here's the way to set the image to a different timezone than
 "Europe/Paris" (the default one):
 
 ```Dockerfile
-FROM gpfister/gp-base-devenv:22.04-latest
+FROM gpfister/gp-base-devenv:22.04
 
 ENV TZ="America/New_York"
 
@@ -223,7 +223,7 @@ You will have to [build from this image](#build-from-this-image) to disable the
 the password less sudo command. Typically create a `Dockerfile` like:
 
 ```Dockerfile
-FROM gpfister/gp-base-devenv:22.04-latest
+FROM ghcr.io/gpfister/gp-base-devenv:22.04
 
 ARG VSCODE_PASSWORD="dummy"
 
@@ -245,7 +245,7 @@ If you simply want to get rid of `sudo`:
 
 ```Dockerfile
 
-FROM gpfister/nrf-devenv:latest
+FROM ghcr.io/gpfister/gp-base-devenv:22.04
 
 # Switch to root to make changes
 USER root
