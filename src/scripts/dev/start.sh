@@ -15,9 +15,13 @@
 
 set -e
 
-VERSION=`cat .version`-dev
-IMAGE_NAME="`cat .image_name`"
+VERSION=$(echo "`cat .version`-dev")
+IMAGE_NAME=$(cat .image_name)
 IMAGE="$IMAGE_NAME:$1-$VERSION"
-CONTAINER="`cat .image_name | sed -e 's/gpfister\///g'`-$1-$VERSION"
+CONTAINER=$(echo "`cat .image_name | sed -e 's/ghcr.io\///g' -e 's/gpfister\///g'`-$1-$VERSION")
 
-docker run --name $CONTAINER -it $IMAGE /bin/zsh
+docker run --user 1000:1000 \
+           --name $CONTAINER \
+           -i -t \
+           $IMAGE \
+           /bin/zsh
