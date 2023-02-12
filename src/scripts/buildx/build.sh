@@ -37,5 +37,4 @@ docker buildx build --platform linux/arm64,linux/amd64 \
                     -t $IMAGE_VERSION \
                     -t $IMAGE_VERSION_MAJOR \
                     -t $IMAGE_VERSION_MINOR \
-                    # -t $IMAGE_VERSION_TIMESTAMP \
                     -f "$DOCKERFILE" .
