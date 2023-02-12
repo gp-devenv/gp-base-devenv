@@ -52,20 +52,35 @@ user will not be persisted.
 
 ## Build, scan and push
 
-### A word about image version formatting
+### Versioning
 
-Image version contains the Ubuntu version and the build version, using the format
-`<Ubuntu version>-<Build version>` (e.g. 22.04-0.1.0).
+Image version contains the Ubuntu version and the build version, using the
+format `<Ubuntu version>-<Build version>`. The build version refers to the
+latest Dockerfile script, when modification consists of fixing (patch change),
+or adding or removing something significant (minor change) or breaking (major).
 
-For CI/CD, the version is store in `.version` file.
+Images are builts daily using the last build version (at the moment), and is
+tagged with the day (`-YYYYMMDD`).
 
-The version is in the format [SemVer](https://en.wikipedia.org/wiki/Software_versioning#Semantic_versioning).
+For example:
 
-### A word about developments
+| Image                                                | Description                                          |
+| ---------------------------------------------------- | ---------------------------------------------------- |
+| ghcr.io/gpfister/gp-base-devenv:22.04                | The latest build using Ubuntu 22.04                  |
+| ghcr.io/gpfister/gp-base-devenv:22.04-1.1.0          | The latest build 1.1.0 using Ubuntu 22.04            |
+| ghcr.io/gpfister/gp-base-devenv:22.04-1.1.0-20230102 | The build 1.1.0 on 2023 Jan. 2nd, using Ubuntu 22.04 |
+| ghcr.io/gpfister/gp-base-devenv:22.04-1.0.0          | The latest build 1.0.0 using Ubuntu 22.04            |
+| ghcr.io/gpfister/gp-base-devenv:22.04-1.0.0-20230101 | The build 1.0.0 on 2023 Jan. 1st, using Ubuntu 22.04 |
+
+For CI/CD, the build version is store in `.version` file. The build version is
+in the format
+[SemVer](https://en.wikipedia.org/wiki/Software_versioning#Semantic_versioning).
+
+### Testing locally using `-dev` images
 
 When you are making change to the image, use :develop at the end of the
-[build](#build), [run](#run) and [scan](#scan) commands. The `develop` tag
-should not be pushed...
+[build](#build), [run](#run) and [scan](#scan) commands. The `*-dev` tag
+should never be pushed...
 
 ### Cross-platform building
 
@@ -82,7 +97,7 @@ You will need to create a multiarch builder:
 ./src/scripts/buildx/setup.sh
 ```
 
-Up successful completion, it should at least have platforms `linux/arm64` and 
+Up successful completion, it should at least have platforms `linux/arm64` and
 `linux/amd64`:
 
 ```sh
@@ -122,7 +137,7 @@ To build using a specific Ubuntu version, use:
 
 where `UBUNTU_VERSION` can be 20.04 or 22.04.
 
-It will create and image `gpfister/gp-base-devenv` tagged with the current 
+It will create and image `gpfister/gp-base-devenv` tagged with the current
 version (see `src/.version` file) and `-dev` suffix. For example:
 
 ```sh
@@ -267,4 +282,4 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-See license [here](./LICENSE.md).
+See license [here](./LICENSE).

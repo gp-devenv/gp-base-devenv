@@ -23,6 +23,7 @@ on:
 
 jobs:
   build:
+    name: Build ghcr.io/gpfister/gp-base-devenv
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -30,5 +31,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build for Ubuntu ${{ matrix.ubuntu-version }}
-        run: (cd src && ./scripts/dev/build.sh ${{ matrix.ubuntu-version }})
+      - name: Setup buildx
+        run: (cd src && ./scripts/buildx/setup.sh)
+      - name: Build using ubuntu:${{ matrix.ubuntu-version }}
+        run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntu-version }})

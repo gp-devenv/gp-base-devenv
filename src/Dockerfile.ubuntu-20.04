@@ -13,6 +13,8 @@
 
 FROM ubuntu:20.04
 
+LABEL org.opencontainers.image.description "Base image using Ubuntu for building VS Code Dev Container"
+
 # Timezone
 ENV TZ="Europe/Paris"
 
