@@ -1,8 +1,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
-
-[![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/base-devenv/tags)
-[![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/base-devenv/tags)
+![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
+![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
 
 # Base Dev Environment
 
@@ -81,8 +80,8 @@ daily.
 ### Testing locally using `-dev` images
 
 When you are making change to the image, use :develop at the end of the
-[build](#build), [run](#run) and [scan](#scan) commands. The `*-dev` tag
-should never be pushed...
+[build](#build_dev), [run](#run_dev) and [scan](#scan_dev) commands. The `*-dev`
+tag should never be pushed...
 
 ### Cross-platform building
 
@@ -127,9 +126,11 @@ Once the previous step is completed, simpy run to build the current version:
 (cd src && ./scripts/buildx/build.sh)
 ```
 
-<div id="build" />
-
 ### Build using local architecture (for local testing)
+
+<div id="build_dev" />
+
+#### Build the development image
 
 To build using a specific Ubuntu version, use:
 
@@ -153,9 +154,9 @@ To remove the created image (named:
 (cd scr && ./scripts/dev/image/rm.sh <UBUNTU_VERSION>)
 ```
 
-<div id="run" />
+<div id="run_dev" />
 
-## Run or create/start/stop/exec a container
+#### Run or create/start/stop/exec a container
 
 To run an interactive container of a give Ubuntu version, simple use:
 
@@ -182,9 +183,9 @@ To remove the created container (named:
 (cd src && ./scripts/dev/container/rm.sh <UBUNTU_VERSION>)
 ```
 
-<div id="scan" />
+<div id="scan_dev" />
 
-### Scan
+#### Scan
 
 To scan the image of a give Ubuntu version, simple use:
 
