@@ -54,6 +54,7 @@ jobs:
                --data '{"ref":"master","inputs":{"ubuntu_version":"${{ matrix.ubuntu_version }}"}}'
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
+# End
 #
 # Old version
 # jobs:
