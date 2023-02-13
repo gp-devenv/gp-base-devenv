@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# gp-base-devenv
+# gp-firebase-devenv
 # Copyright (c) 2023, Greg PFISTER. MIT License.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -15,13 +15,6 @@
 
 set -e
 
-echo "Setup docker buildx: multiarch..."
-docker buildx create --name multiarch
-
-echo "Activating docker buildx: multiarch..."
-docker buildx use multiarch
-
-echo "Inspecting result:"
-docker buildx inspect --bootstrap
+htop
 
 # End

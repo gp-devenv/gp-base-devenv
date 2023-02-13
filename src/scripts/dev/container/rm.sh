@@ -15,14 +15,11 @@
 
 set -e
 
-VERSION="`cat .version`-dev"
-DOCKERFILE=`echo "./Dockerfile."$1`
+VERSION=`cat .version`-dev
 IMAGE_NAME="`cat .image_name`"
 IMAGE="$IMAGE_NAME:$1-$VERSION"
+CONTAINER="`cat .image_name | sed -e 's/ghcr.io\///g' -e 's/gpfister\///g'`-$1-$VERSION"
 
-if [ ! -f "$DOCKERFILE" ]; then
-    echo "Dockerfile '$DOCKERFILE' not found"
-    exit 1
-fi
+docker container rm $CONTAINER
 
-docker build --no-cache -t $IMAGE -f $DOCKERFILE .
+# End

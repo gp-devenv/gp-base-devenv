@@ -15,13 +15,15 @@
 
 set -e
 
-echo "Setup docker buildx: multiarch..."
-docker buildx create --name multiarch
+VERSION=$(echo "`cat .version`-dev")
+IMAGE_NAME=$(cat .image_name)
+IMAGE="$IMAGE_NAME:$1-$VERSION"
+CONTAINER=$(echo "`cat .image_name | sed -e 's/ghcr.io\///g' -e 's/gpfister\///g'`-$1-$VERSION")
 
-echo "Activating docker buildx: multiarch..."
-docker buildx use multiarch
-
-echo "Inspecting result:"
-docker buildx inspect --bootstrap
+docker run --user vscode \
+           --name $CONTAINER \
+           -i -t \
+           $IMAGE \
+           /bin/zsh
 
 # End

@@ -15,13 +15,10 @@
 
 set -e
 
-echo "Setup docker buildx: multiarch..."
-docker buildx create --name multiarch
+VERSION="`cat .version`-dev"
+IMAGE_NAME="`cat .image_name`"
+IMAGE="$IMAGE_NAME:$1-$VERSION"
 
-echo "Activating docker buildx: multiarch..."
-docker buildx use multiarch
-
-echo "Inspecting result:"
-docker buildx inspect --bootstrap
+docker iamge rm $IMAGE
 
 # End
