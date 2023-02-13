@@ -140,18 +140,14 @@ To build using a specific Ubuntu version, use:
 where `UBUNTU_VERSION` must 22.04.
 
 It will create and image `gpfister/gp-base-devenv` tagged with the current
-version (see `src/.version` file) and `-dev` suffix. For example:
-
-```sh
-REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
-ghcr.io/gpfister/gp-base-devenv  22.04-1.2.0-dev   21a32a4c2177   11 minutes ago   916MB
-```
+version (see `src/.version` file) and `-dev` suffix.
 
 You may alter the `.src/.version` file should you want to have different tags or
 names, however if you PR your change, it will be rejected. The ideal solution
 is to run the `docker build` command instead.
 
-To remove the created image, simply use:
+To remove the created image (named:
+`ghcr.io/gpfister/gp-base-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
 
 ```sh
 (cd scr && ./scripts/dev/image/rm.sh <UBUNTU_VERSION>)

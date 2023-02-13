@@ -34,7 +34,7 @@ jobs:
       - name: Authenticating
         run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
         env:
-          GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
+          GHCR_IO_TOKEN: ${{ secrets.ghcr_io_token }}
       - name: Build using ubuntu:${{ matrix.ubuntu_version }}
         run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntu_version }})
       - name: Push to ghcr.io/gpfister/gp-base-devenv:${{ matrix.ubuntu_version }}
