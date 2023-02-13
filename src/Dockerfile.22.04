@@ -26,7 +26,7 @@ ENV TZ="Europe/Paris"
 VOLUME [ "/home" ]
 
 # Entrypoint script
-COPY dist/entrypoint.sh /
+COPY dist/entrypoint.sh /entrypoint.sh
 
 # Remove unwanted files (not possible via .dockerignore)
 RUN rm -rf scripts

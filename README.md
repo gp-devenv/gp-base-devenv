@@ -1,5 +1,4 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
-[![Ubuntu](https://img.shields.io/badge/ubuntu-20.04-orange)](https://ubuntu.com)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
 
 [![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)](https://hub.docker.com/repository/docker/gpfister/base-devenv/tags)
@@ -16,7 +15,7 @@ Copyright (c) 2023, Greg PFISTER. MIT License
 This is a simple Ubuntu container to use as base image for building development
 to be used as Visual Studio Code Remote Container.
 
-This is image is provided with both Ubuntu 20.04 and Ubuntu 22.04.
+This is image is provided with Ubuntu 22.04.
 
 Along with the basic requirements, the image provides:
 
@@ -68,6 +67,9 @@ For example:
 | ghcr.io/gpfister/gp-base-devenv:22.04-1.1.0 | The latest build 1.1.0 using Ubuntu 22.04 |
 | ghcr.io/gpfister/gp-base-devenv:22.04-1.0   | The latest build 1.0.x using Ubuntu 22.04 |
 | ghcr.io/gpfister/gp-base-devenv:22.04-1.0.0 | The latest build 1.0.0 using Ubuntu 22.04 |
+
+In addition, `-arm64` and `-amd64` tags are available, should you need to force
+a specific arch.
 
 For CI/CD, the build version is store in `.version` file. The build version is
 in the format
@@ -132,35 +134,57 @@ Once the previous step is completed, simpy run to build the current version:
 To build using a specific Ubuntu version, use:
 
 ```sh
-(cd scr && ./scripts/dev/build.sh <UBUNTU_VERSION>)
+(cd scr && ./scripts/dev/image/build.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` can be 20.04 or 22.04.
+where `UBUNTU_VERSION` must 22.04.
 
 It will create and image `gpfister/gp-base-devenv` tagged with the current
 version (see `src/.version` file) and `-dev` suffix. For example:
 
 ```sh
 REPOSITORY                       TAG               IMAGE ID       CREATED          SIZE
-gpfister/gp-base-devenv          22.04-1.0.0-dev   21a32a4c2177   11 minutes ago   916MB
-gpfister/gp-base-devenv          20.04-1.0.0-dev   466450fda71c   12 minutes ago   873MB
+ghcr.io/gpfister/gp-base-devenv  22.04-1.2.0-dev   21a32a4c2177   11 minutes ago   916MB
 ```
 
 You may alter the `.src/.version` file should you want to have different tags or
 names, however if you PR your change, it will be rejected. The ideal solution
 is to run the `docker build` command instead.
 
+To remove the created image, simply use:
+
+```sh
+(cd scr && ./scripts/dev/image/rm.sh <UBUNTU_VERSION>)
+```
+
 <div id="run" />
 
-## Run a container
+## Run or create/start/stop/exec a container
 
 To run an interactive container of a give Ubuntu version, simple use:
 
 ```sh
-(cd src && ./scripts/dev/start.sh <UBUNTU_VERSION>)
+(cd src && ./scripts/dev/container/run.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` can be 20.04 or 22.04.
+where `UBUNTU_VERSION` must 22.04.
+
+Alternatively, you can create and start a container to run in background, and
+execute scripts on this container, using the following scripts:
+
+| Action | Script                                                                   |
+| ------ | ------------------------------------------------------------------------ |
+| create | `(cd src && ./scripts/dev/container/create.sh <UBUNTU_VERSION>)`         |
+| start  | `(cd src && ./scripts/dev/container/start.sh <UBUNTU_VERSION>)`          |
+| stop   | `(cd src && ./scripts/dev/container/stop.sh <UBUNTU_VERSION>)`           |
+| exec   | `(cd src && ./scripts/dev/container/exec.sh <UBUNTU_VERSION>) <COMMAND>` |
+
+To remove the created container (named:
+`gp-base-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
+
+```sh
+(cd src && ./scripts/dev/container/rm.sh <UBUNTU_VERSION>)
+```
 
 <div id="scan" />
 
@@ -172,7 +196,7 @@ To scan the image of a give Ubuntu version, simple use:
 (cd src && ./scripts/dev/scan.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` can be 20.04 or 22.04.
+where `UBUNTU_VERSION` must 22.04.
 
 <div id="build-from-this-image" />
 

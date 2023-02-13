@@ -15,7 +15,6 @@
 
 set -e
 
-TIMESTAMP=$(date +"%Y%m%d")
 VERSION=$(cat .version)
 VERSION_MAJOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1/')
 VERSION_MINOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1.\2/')
@@ -25,14 +24,14 @@ IMAGE="$IMAGE_NAME:$1"
 IMAGE_VERSION="$IMAGE_NAME:$1-$VERSION"
 IMAGE_VERSION_MAJOR="$IMAGE_NAME:$1-$VERSION_MAJOR"
 IMAGE_VERSION_MINOR="$IMAGE_NAME:$1-$VERSION_MINOR"
-# IMAGE_VERSION_TIMESTAMP="$IMAGE_NAME:$1-$VERSION-$TIMESTAMP"
 
 if [ ! -f "$DOCKERFILE" ]; then
     echo "Dockerfile '$DOCKERFILE' not found"
     exit 1
 fi
 
-docker buildx build --platform linux/arm64,linux/amd64 \
+docker buildx build --no-cache \
+                    --platform linux/arm64,linux/amd64 \
                     -t $IMAGE \
                     -t $IMAGE_VERSION \
                     -t $IMAGE_VERSION_MAJOR \
