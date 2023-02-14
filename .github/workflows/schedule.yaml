@@ -39,7 +39,7 @@ jobs:
         run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntuVersion }})
       - name: Push to ghcr.io/gpfister/gp-base-devenv:${{ matrix.ubuntuVersion }}
         run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntuVersion }})
-      - name: Dispatch to ghcr.io/gpfister/gp-firebase-devenv
+      - name: Dispatch to gpfister/gp-firebase-devenv repository
         run: |
           curl -X POST \
                -H "Authorization: Bearer $GHCR_IO_TOKEN" \
@@ -49,7 +49,7 @@ jobs:
                --data '{"ref":"master","inputs":{"ubuntuVersion":"${{ matrix.ubuntuVersion }}"}}'
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
-      - name: Dispatch to ghcr.io/gpfister/gp-docker-devenv
+      - name: Dispatch to gpfister/gp-docker-devenv repository
         run: |
           curl -X POST \
                -H "Authorization: Bearer $GHCR_IO_TOKEN" \
