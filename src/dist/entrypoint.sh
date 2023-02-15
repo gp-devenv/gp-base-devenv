@@ -15,6 +15,6 @@
 
 set -e
 
-htop
+nginx -g "daemon off;" 
 
 # End

@@ -22,7 +22,8 @@ CONTAINER=$(echo "`cat .image_name | sed -e 's/ghcr.io\///g' -e 's/gpfister\///g
 
 docker run --user vscode \
            --name $CONTAINER \
-           -i -t \
+           -p 80:80 \
+           -it \
            $IMAGE \
            /bin/zsh
 

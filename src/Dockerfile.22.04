@@ -39,6 +39,8 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install locales && \
     dpkg-reconfigure locales
+COPY ./dist/locale.gen /etc/locale.gen
+RUN locale-gen
 
 # Update all
 RUN apt-get update && \
@@ -73,6 +75,12 @@ RUN curl -sS https://starship.rs/install.sh -o install.sh && \
     sh install.sh --yes && \
     rm install.sh
 
+# Install nginx
+RUN apt-get update && \
+    apt-get install -y nginx-light && \
+    apt-get autoclean -y && \
+    apt-get autoremove -y
+
 # Setup sudo
 RUN apt-get update && \
     apt-get install -y sudo
@@ -87,6 +95,7 @@ RUN mkdir /etc/skel/.config
 COPY dist/starship.toml /etc/skel/.config
 RUN curl -fLo /etc/skel/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 RUN git clone https://github.com/tmux-plugins/tpm /etc/skel/.tmux/plugins/tpm
+RUN mkdir /etc/skel/.bin
 
 # Adjust root user
 WORKDIR /root
@@ -95,10 +104,11 @@ COPY dist/.zshrc .
 COPY dist/.vimrc .
 COPY dist/.tmux.conf .
 COPY dist/setup.sh .
-RUN mkdir ~/.config
-COPY dist/starship.toml /etc/skel/.config
-RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+RUN mkdir .config 
+COPY dist/starship.toml .config/
+RUN curl -fLo .vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm
+RUN mkdir .bin
 
 # Add vscode user
 RUN useradd -s /bin/zsh -m vscode
