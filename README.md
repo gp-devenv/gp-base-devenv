@@ -25,6 +25,7 @@ Along with the basic requirements, the image provides:
 - a `vscode` user account
 - `sudo` passwordless commands
 - `tmux`
+- `nginx` light
 
 The image can be found on
 [Docker Hub](https://hub.docker.com/repository/docker/gpfister/base-devenv).
