@@ -23,7 +23,7 @@ rm() {
     docker image rm $IMAGE
 }
 
-if [ -z "$1"]; then
+if [ -z "$1" ]; then
     rm $1
 else
     rm 22.04

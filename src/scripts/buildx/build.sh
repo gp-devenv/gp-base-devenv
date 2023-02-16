@@ -52,7 +52,7 @@ build() {
                         -f "$DOCKERFILE" .
 }
 
-if [ -z "$1"]; then
+if [ -z "$1" ]; then
     build $1
 else
     build 22.04

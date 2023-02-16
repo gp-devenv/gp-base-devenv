@@ -15,7 +15,7 @@
 
 set -e
 
-if [ -z "$1"]; then
+if [ -z "$1" ]; then
     echo "Usage: $0 <UBUNUT_VERSION>"
     exit 1
 fi

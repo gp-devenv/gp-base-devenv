@@ -54,7 +54,7 @@ push() {
                         -f "$DOCKERFILE" .
 }
 
-if [ -z "$1"]; then
+if [ -z "$1" ]; then
     push $1
 else
     push 22.04

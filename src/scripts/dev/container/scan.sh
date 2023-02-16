@@ -29,7 +29,7 @@ scan() {
     docker scan $IMAGE -f "$DOCKERFILE" --accept-license 
 }
 
-if [ -z "$1"]; then
+if [ -z "$1" ]; then
     scan $1
 else
     scan 22.04
