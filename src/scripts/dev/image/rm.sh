@@ -15,18 +15,15 @@
 
 set -e
 
-rm() {
-    VERSION="`cat .version`-dev"
-    IMAGE_NAME="`cat .image_name`"
-    IMAGE="$IMAGE_NAME:$1-$VERSION"
-
-    docker image rm $IMAGE
-}
-
 if [ -z "$1" ]; then
-    rm $1
-else
-    rm 22.04
+    echo "Usage: $0 <UBUNUT_VERSION>"
+    exit 1
 fi
+
+VERSION="`cat .version`-dev"
+IMAGE_NAME="`cat .image_name`"
+IMAGE="$IMAGE_NAME:$1-$VERSION"
+
+docker image rm $IMAGE
 
 # End
