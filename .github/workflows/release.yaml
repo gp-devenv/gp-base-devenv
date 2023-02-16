@@ -21,7 +21,7 @@ on:
 
 jobs:
   deploy:
-    name: Push ghcr.io/gpfister/gp-base-devenv
+    name: Push ghcr.io/gp-devenv/gp-base-devenv
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -37,6 +37,6 @@ jobs:
           GHCR_IO_TOKEN: ${{ secrets.ghcr_io_token }}
       - name: Build using ubuntu:${{ matrix.ubuntuVersion }}
         run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntuVersion }})
-      - name: Push to ghcr.io/gpfister/gp-base-devenv:${{ matrix.ubuntuVersion }}
+      - name: Push to ghcr.io/gp-devenv/gp-base-devenv:${{ matrix.ubuntuVersion }}
         run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntuVersion }})
 # End

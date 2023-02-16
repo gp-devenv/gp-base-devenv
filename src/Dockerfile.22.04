@@ -11,9 +11,42 @@
 # SOFTWARE.
 #
 
-FROM ubuntu:22.04
+# ------------------------------------------------------------------------------
+# Build gp-devenv
+# ------------------------------------------------------------------------------
 
-LABEL org.opencontainers.image.source=https://github.com/gpfister/gp-base-devenv
+FROM node:18 as build
+
+ENV LATEST_RELEASE_API="https://api.github.com/repos/gp-devenv/gp-devenv-app/releases/latest" 
+ENV ARCHIVE_URL="https://github.com/gp-devenv/gp-devenv-app/archive/refs/tags"
+
+# Install requirements
+RUN npm i -g npm@latest @angular/cli@latest
+RUN apt-get update && \
+    apt-get install -y wget && \
+    apt-get autoclean -y && \
+    apt-get autoremove -y
+
+# Get sources
+RUN mkdir -p /workspace
+WORKDIR /workspace
+RUN export LATEST_RELEASE=`curl -s -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" $LATEST_RELEASE_API | grep "tag_name" | sed -e 's/\(.*\)"\(.*\)"\(.*\):\(.*\)"\(.*\)",\(.*\)/\5/'` && \
+    curl -L -o gp-devenv-app.tar.gz $ARCHIVE_URL/$LATEST_RELEASE.tar.gz && \
+    tar xfz gp-devenv-app.tar.gz && \
+    mv gp-devenv-app-$LATEST_RELEASE gp-devenv-app
+
+# Copy sources and build
+WORKDIR /workspace/gp-devenv-app
+RUN npm ci && \
+    npm run build
+
+# ------------------------------------------------------------------------------
+# Build gp-base-devenv image
+# ------------------------------------------------------------------------------
+
+FROM ubuntu:22.04 as final
+
+LABEL org.opencontainers.image.source=https://github.com/gp-devenv/gp-base-devenv
 LABEL org.opencontainers.image.description "Base image using Ubuntu 22.04 for building VS Code Dev Container"
 LABEL org.opencontainers.image.licenses=MIT
 
@@ -74,13 +107,6 @@ RUN apt-get update && \
 RUN curl -sS https://starship.rs/install.sh -o install.sh && \
     sh install.sh --yes && \
     rm install.sh
-
-# Install nginx
-RUN apt-get update && \
-    apt-get install -y nginx-light && \
-    apt-get autoclean -y && \
-    apt-get autoremove -y
-
 # Setup sudo
 RUN apt-get update && \
     apt-get install -y sudo
@@ -114,8 +140,19 @@ RUN mkdir .bin
 RUN useradd -s /bin/zsh -m vscode
 RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vscode
 
-# Switch back to user
-USER vscode
-WORKDIR /home/vscode
+# Install nginx
+RUN apt-get update && \
+    apt-get install -y nginx-light && \
+    apt-get autoclean -y && \
+    apt-get autoremove -y
 
-ENTRYPOINT ["sudo", "/entrypoint.sh"]
+# Copy gp-devenv-dev from build stage
+RUN rm -rf /var/www/html
+COPY --from=build /workspace/gp-devenv-app/dist/gp-devenv-app /var/www/html
+RUN chown -R www-data: /var/www/html
+
+EXPOSE 80
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+# End

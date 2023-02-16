@@ -27,12 +27,20 @@ Along with the basic requirements, the image provides:
 - `tmux`
 - `nginx` light
 
-The image can be found on
-[Docker Hub](https://hub.docker.com/repository/docker/gpfister/base-devenv).
+The image can be found
+[here](https://github.com/gp-devenv/gp-base-devenv/pkgs/container/gp-base-devenv).
 
 The following image are using this base image:
 
-- [firebase-devenv](https://hub.docker.com/repository/docker/gpfister/firebase-devenv):
+- [ghcr.io/gp-devenv/gp-node-devenv](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv):
+  Provide a Node.js (14, 16 or 18) dev container for VS code.
+  - [ghcr.io/gp-devenv/gp-firebase-devenv](https://github.com/gp-devenv/gp-firebase-devenv/pkgs/container/gp-firebase-devenv):
+    Provide a Firebase dev (using node 14, 16 or 18) container for VS Code.
+  - [ghcr.io/gp-devenv/gp-angular-devenv](https://github.com/gp-devenv/gp-angular-devenv/pkgs/container/gp-angular-devenv):
+    Provide a Angular (14 or 15) dev (using node 14, 16 or 18) container for VS Code.
+    - [ghcr.io/gp-devenv/gp-firebase-angular-hosting-devenv](https://github.com/gp-devenv/gp-firebase-angular-hosting-devenv/pkgs/container/gp-firebase-angular-hosting-devenv):
+      Provide a Firebase dev (using node 14, 16 or 18 and angular 14 or15) container for VS Code.
+- [ghcr.io/gp-devenv/gp-docker-devenv](https://github.com/gp-devenv/gp-docker-devenv/pkgs/container/gp-docker-devenv):
   Provide a base image to build a Firebase dev container for VS Code.
 
 <div id="volumes" />
@@ -59,14 +67,14 @@ or adding or removing something significant (minor change) or breaking (major).
 
 For example:
 
-| Image                                       | Description                               |
-| ------------------------------------------- | ----------------------------------------- |
-| ghcr.io/gpfister/gp-base-devenv:22.04       | The latest build using Ubuntu 22.04       |
-| ghcr.io/gpfister/gp-base-devenv:22.04-1     | The latest build 1.x using Ubuntu 22.04   |
-| ghcr.io/gpfister/gp-base-devenv:22.04-1.1   | The latest build 1.1.x using Ubuntu 22.04 |
-| ghcr.io/gpfister/gp-base-devenv:22.04-1.1.0 | The latest build 1.1.0 using Ubuntu 22.04 |
-| ghcr.io/gpfister/gp-base-devenv:22.04-1.0   | The latest build 1.0.x using Ubuntu 22.04 |
-| ghcr.io/gpfister/gp-base-devenv:22.04-1.0.0 | The latest build 1.0.0 using Ubuntu 22.04 |
+| Image                                        | Description                               |
+| -------------------------------------------- | ----------------------------------------- |
+| ghcr.io/gp-devenv/gp-base-devenv:22.04       | The latest build using Ubuntu 22.04       |
+| ghcr.io/gp-devenv/gp-base-devenv:22.04-1     | The latest build 1.x using Ubuntu 22.04   |
+| ghcr.io/gp-devenv/gp-base-devenv:22.04-1.1   | The latest build 1.1.x using Ubuntu 22.04 |
+| ghcr.io/gp-devenv/gp-base-devenv:22.04-1.1.0 | The latest build 1.1.0 using Ubuntu 22.04 |
+| ghcr.io/gp-devenv/gp-base-devenv:22.04-1.0   | The latest build 1.0.x using Ubuntu 22.04 |
+| ghcr.io/gp-devenv/gp-base-devenv:22.04-1.0.0 | The latest build 1.0.0 using Ubuntu 22.04 |
 
 In addition, `-arm64` and `-amd64` tags are available, should you need to force
 a specific arch.
@@ -141,7 +149,7 @@ To build using a specific Ubuntu version, use:
 
 where `UBUNTU_VERSION` must 22.04.
 
-It will create and image `gpfister/gp-base-devenv` tagged with the current
+It will create an image `ghcr.io/gp-devenv/gp-base-devenv` tagged with the current
 version (see `src/.version` file) and `-dev` suffix.
 
 You may alter the `.src/.version` file should you want to have different tags or
@@ -149,7 +157,7 @@ names, however if you PR your change, it will be rejected. The ideal solution
 is to run the `docker build` command instead.
 
 To remove the created image (named:
-`ghcr.io/gpfister/gp-base-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
+`ghcr.io/gp-devenv/gp-base-devenv:<UBUNTU_VERIONS>-<VERSION>-dev`), simply use:
 
 ```sh
 (cd scr && ./scripts/dev/image/rm.sh <UBUNTU_VERSION>)
@@ -205,7 +213,7 @@ image. For example, here's the way to set the image to a different timezone than
 "Europe/Paris" (the default one):
 
 ```Dockerfile
-FROM gpfister/gp-base-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-base-devenv:22.04
 
 ENV TZ="America/New_York"
 
@@ -246,7 +254,7 @@ You will have to [build from this image](#build-from-this-image) to disable the
 the password less sudo command. Typically create a `Dockerfile` like:
 
 ```Dockerfile
-FROM ghcr.io/gpfister/gp-base-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-base-devenv:22.04
 
 ARG VSCODE_PASSWORD="dummy"
 
@@ -268,7 +276,7 @@ If you simply want to get rid of `sudo`:
 
 ```Dockerfile
 
-FROM ghcr.io/gpfister/gp-base-devenv:22.04
+FROM ghcr.io/gp-devenv/gp-base-devenv:22.04
 
 # Switch to root to make changes
 USER root
