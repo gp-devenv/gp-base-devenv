@@ -23,7 +23,7 @@ on:
 
 jobs:
   build:
-    name: Build ghcr.io/gpfister/gp-base-devenv
+    name: Build ghcr.io/gp-devenv/gp-base-devenv
     runs-on: ubuntu-22.04
     strategy:
       matrix:

@@ -21,7 +21,7 @@ on:
 
 jobs:
   deploy:
-    name: Push ghcr.io/gpfister/gp-base-devenv
+    name: Push ghcr.io/gp-devenv/gp-base-devenv
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -37,25 +37,35 @@ jobs:
           GHCR_IO_TOKEN: ${{ secrets.ghcr_io_token }}
       - name: Build using ubuntu:${{ matrix.ubuntuVersion }}
         run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntuVersion }})
-      - name: Push to ghcr.io/gpfister/gp-base-devenv:${{ matrix.ubuntuVersion }}
+      - name: Push to ghcr.io/gp-devenv/gp-base-devenv:${{ matrix.ubuntuVersion }}
         run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntuVersion }})
-      - name: Dispatch to gpfister/gp-firebase-devenv repository
+      # - name: Dispatch to ghcr.io/gp-devenv/gp-firebase-devenv repository
+      #   run: |
+      #     curl -X POST \
+      #          -H "Authorization: Bearer $GHCR_IO_TOKEN" \
+      #          -H "X-Github-Api-Version: 2022-11-28" \
+      #          -H "Content-Type: application/json" \
+      #          https://api.github.com/repos/gp-devenv/gp-firebase-devenv/actions/workflows/dispatch.yaml/dispatches \
+      #          --data '{"ref":"master","inputs":{"ubuntuVersion":"${{ matrix.ubuntuVersion }}"}}'
+      #   env:
+      #     GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
+      - name: Dispatch to ghcr.io/gp-devenv/gp-docker-devenv repository
         run: |
           curl -X POST \
                -H "Authorization: Bearer $GHCR_IO_TOKEN" \
                -H "X-Github-Api-Version: 2022-11-28" \
                -H "Content-Type: application/json" \
-               https://api.github.com/repos/gpfister/gp-firebase-devenv/actions/workflows/dispatch.yaml/dispatches \
+               https://api.github.com/repos/gp-devenv/gp-docker-devenv/actions/workflows/dispatch.yaml/dispatches \
                --data '{"ref":"master","inputs":{"ubuntuVersion":"${{ matrix.ubuntuVersion }}"}}'
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
-      - name: Dispatch to gpfister/gp-docker-devenv repository
+      - name: Dispatch to ghcr.io/gp-devenv/gp-node-devenv repository
         run: |
           curl -X POST \
                -H "Authorization: Bearer $GHCR_IO_TOKEN" \
                -H "X-Github-Api-Version: 2022-11-28" \
                -H "Content-Type: application/json" \
-               https://api.github.com/repos/gpfister/gp-docker-devenv/actions/workflows/dispatch.yaml/dispatches \
+               https://api.github.com/repos/gp-devenv/gp-node-devenv/actions/workflows/dispatch.yaml/dispatches \
                --data '{"ref":"master","inputs":{"ubuntuVersion":"${{ matrix.ubuntuVersion }}"}}'
         env:
           GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}

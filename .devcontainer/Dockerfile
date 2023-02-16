@@ -1,7 +1,5 @@
-#!/bin/sh
-
 #
-# gp-base-devenv
+# gp-firebase-devenv
 # Copyright (c) 2023, Greg PFISTER. MIT License.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -13,17 +11,11 @@
 # SOFTWARE.
 #
 
-set -e
+FROM ghcr.io/gpfister/gp-docker-devenv:22.04-1
 
-if [ -z "$1" ]; then
-    echo "Usage: $0 <UBUNUT_VERSION>"
-    exit 1
-fi
+USER vscode
+WORKDIR /workspace
 
-VERSION="`cat .version`-dev"
-IMAGE_NAME="`cat .image_name`"
-IMAGE="$IMAGE_NAME:$1-$VERSION"
+EXPOSE 80
 
-docker image rm $IMAGE
-
-# End
+ENTRYPOINT [ "sudo", "/entrypoint.sh" ]
