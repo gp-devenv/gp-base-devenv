@@ -15,10 +15,18 @@
 
 set -e
 
-VERSION="`cat .version`-dev"
-IMAGE_NAME="`cat .image_name`"
-IMAGE="$IMAGE_NAME:$1-$VERSION"
+rm() {
+    VERSION="`cat .version`-dev"
+    IMAGE_NAME="`cat .image_name`"
+    IMAGE="$IMAGE_NAME:$1-$VERSION"
 
-docker iamge rm $IMAGE
+    docker image rm $IMAGE
+}
+
+if [ -z "$1"]; then
+    rm $1
+else
+    rm 22.04
+fi
 
 # End

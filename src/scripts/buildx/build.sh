@@ -15,39 +15,47 @@
 
 set -e
 
-VERSION=$(cat .version)
-VERSION_MAJOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1/')
-VERSION_MINOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1.\2/')
-DOCKERFILE=$(echo "./Dockerfile."$1)
-IMAGE_NAME=$(cat .image_name)
-IMAGE="$IMAGE_NAME:$1"
-IMAGE_VERSION="$IMAGE_NAME:$1-$VERSION"
-IMAGE_VERSION_MAJOR="$IMAGE_NAME:$1-$VERSION_MAJOR"
-IMAGE_VERSION_MINOR="$IMAGE_NAME:$1-$VERSION_MINOR"
+build() {
+    VERSION=$(cat .version)
+    VERSION_MAJOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1/')
+    VERSION_MINOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1.\2/')
+    DOCKERFILE=$(echo "./Dockerfile."$1)
+    IMAGE_NAME=$(cat .image_name)
+    IMAGE="$IMAGE_NAME:$1"
+    IMAGE_VERSION="$IMAGE_NAME:$1-$VERSION"
+    IMAGE_VERSION_MAJOR="$IMAGE_NAME:$1-$VERSION_MAJOR"
+    IMAGE_VERSION_MINOR="$IMAGE_NAME:$1-$VERSION_MINOR"
 
-if [ ! -f "$DOCKERFILE" ]; then
-    echo "Dockerfile '$DOCKERFILE' not found"
-    exit 1
+    if [ ! -f "$DOCKERFILE" ]; then
+        echo "Dockerfile '$DOCKERFILE' not found"
+        exit 1
+    fi
+
+    docker buildx build --no-cache \
+                        --platform linux/arm64,linux/amd64 \
+                        -t $IMAGE \
+                        -t $IMAGE_VERSION \
+                        -t $IMAGE_VERSION_MAJOR \
+                        -t $IMAGE_VERSION_MINOR \
+                        -f "$DOCKERFILE" .
+    docker buildx build --platform linux/arm64 \
+                        -t $IMAGE-arm64 \
+                        -t $IMAGE_VERSION-arm64 \
+                        -t $IMAGE_VERSION_MAJOR-arm64 \
+                        -t $IMAGE_VERSION_MINOR-arm64 \
+                        -f "$DOCKERFILE" .
+    docker buildx build --platform linux/amd64 \
+                        -t $IMAGE-amd64 \
+                        -t $IMAGE_VERSION-amd64 \
+                        -t $IMAGE_VERSION_MAJOR-amd64 \
+                        -t $IMAGE_VERSION_MINOR-amd64 \
+                        -f "$DOCKERFILE" .
+}
+
+if [ -z "$1"]; then
+    build $1
+else
+    build 22.04
 fi
-
-docker buildx build --no-cache \
-                    --platform linux/arm64,linux/amd64 \
-                    -t $IMAGE \
-                    -t $IMAGE_VERSION \
-                    -t $IMAGE_VERSION_MAJOR \
-                    -t $IMAGE_VERSION_MINOR \
-                    -f "$DOCKERFILE" .
-docker buildx build --platform linux/arm64 \
-                    -t $IMAGE-arm64 \
-                    -t $IMAGE_VERSION-arm64 \
-                    -t $IMAGE_VERSION_MAJOR-arm64 \
-                    -t $IMAGE_VERSION_MINOR-arm64 \
-                    -f "$DOCKERFILE" .
-docker buildx build --platform linux/amd64 \
-                    -t $IMAGE-amd64 \
-                    -t $IMAGE_VERSION-amd64 \
-                    -t $IMAGE_VERSION_MAJOR-amd64 \
-                    -t $IMAGE_VERSION_MINOR-amd64 \
-                    -f "$DOCKERFILE" .
 
 # End

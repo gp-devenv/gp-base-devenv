@@ -15,16 +15,23 @@
 
 set -e
 
-VERSION="`cat .version`-dev"
-DOCKERFILE=`echo "./Dockerfile."$1`
-IMAGE_NAME="`cat .image_name`"
-IMAGE="$IMAGE_NAME:$1-$VERSION"
+scan() {
+    VERSION="`cat .version`-dev"
+    DOCKERFILE=`echo "./Dockerfile."$1`
+    IMAGE_NAME="`cat .image_name`"
+    IMAGE="$IMAGE_NAME:$1-$VERSION"
 
-if [ ! -f "$DOCKERFILE" ]; then
-    echo "Dockerfile '$DOCKERFILE' not found"
-    exit 1
+    if [ ! -f "$DOCKERFILE" ]; then
+        echo "Dockerfile '$DOCKERFILE' not found"
+        exit 1
+    fi
+
+    docker scan $IMAGE -f "$DOCKERFILE" --accept-license 
+}
+
+if [ -z "$1"]; then
+    scan $1
+else
+    scan 22.04
 fi
-
-docker scan $IMAGE -f "$DOCKERFILE" --accept-license 
-
 # End
