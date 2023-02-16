@@ -3,7 +3,7 @@
 ![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
 ![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
 
-# Base Dev Environment
+# gp-base-devenv: Build a dev containers for VSCode
 
 Copyright (c) 2023, Greg PFISTER. MIT License
 
@@ -33,15 +33,15 @@ The image can be found
 The following image are using this base image:
 
 - [ghcr.io/gp-devenv/gp-node-devenv](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv):
-  Provide a Node.js (14, 16 or 18) dev container for VS code.
+  a base image to build a Node.js app in a VS Code dev container
   - [ghcr.io/gp-devenv/gp-firebase-devenv](https://github.com/gp-devenv/gp-firebase-devenv/pkgs/container/gp-firebase-devenv):
-    Provide a Firebase dev (using node 14, 16 or 18) container for VS Code.
+    a base image to build a Firebase app in a VS Code dev container
   - [ghcr.io/gp-devenv/gp-angular-devenv](https://github.com/gp-devenv/gp-angular-devenv/pkgs/container/gp-angular-devenv):
-    Provide a Angular (14 or 15) dev (using node 14, 16 or 18) container for VS Code.
+    a base image to build an Angular app in a VS Code dev container
     - [ghcr.io/gp-devenv/gp-firebase-angular-hosting-devenv](https://github.com/gp-devenv/gp-firebase-angular-hosting-devenv/pkgs/container/gp-firebase-angular-hosting-devenv):
-      Provide a Firebase dev (using node 14, 16 or 18 and angular 14 or15) container for VS Code.
+      a base image to build a Angular app hosted on Firebase in a VS Code dev container
 - [ghcr.io/gp-devenv/gp-docker-devenv](https://github.com/gp-devenv/gp-docker-devenv/pkgs/container/gp-docker-devenv):
-  Provide a base image to build a Firebase dev container for VS Code.
+  a base image to build a Docker app in a VS Code dev container
 
 <div id="volumes" />
 
