@@ -147,6 +147,16 @@ RUN apt-get update && \
 # COPY --from=build /workspace/gp-devenv-app/dist/gp-devenv-app /var/www/html
 # RUN chown -R www-data: /var/www/html
 
+# Switch to vs code user
+USER vscode
+WORKDIR /workspace
+
+# Set /workspace as a safe git directory
+RUN git config --global --add safe.directory /workspace
+
+# Back to root
+USER root
+
 EXPOSE 80
 
 ENTRYPOINT [ "/entrypoint.sh" ]
