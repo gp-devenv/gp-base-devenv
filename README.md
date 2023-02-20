@@ -245,6 +245,7 @@ run the update process.
 ## FAQ
 
 1. [How to require password for sudo command ?](#faq1)
+2. [How to change `nginx` settings ?](#faq2)
 
 <div id="faq1" />
 
@@ -287,6 +288,40 @@ RUN rm /etc/sudoers.d/vscode && \
 
 # Switch back to vscode
 USER vscode
+```
+
+<div id="faq2" />
+
+### 2. How to change `nginx` settings ?
+
+`nginx` can be setup by updating the configuration found on `/etc/nginx`.
+
+```Dockerfile
+
+FROM ghcr.io/gp-devenv/gp-base-devenv:22.04
+
+# Switch to root to make changes
+USER root
+
+# Install whatever should be served using SSL
+
+# Remove provious config
+RUN rm /etc/nginx/sites-enabled/*
+COPY <SITE_CONFIGURATION> /etc/nginx/sites-available/
+RUN ln -s /etc/nginx/site-enabled/<SITE_CONFIGURATION> /etc/nginx/site-available/<SITE_CONFIGURATION>
+
+# Remove the specific config for sudo and add to sudo group
+RUN rm /etc/sudoers.d/vscode && \
+    apt-get purge -y sudo
+
+# Switch back to vscode
+USER vscode
+WORKDIR /workspace
+
+EXPOSE <PORT>
+
+ENTRYPOINT [ "sudo", "/entrypoint.sh"]
+
 ```
 
 <div id="known_issues" />
