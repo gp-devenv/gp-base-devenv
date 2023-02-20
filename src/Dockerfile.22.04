@@ -12,39 +12,35 @@
 #
 
 # ------------------------------------------------------------------------------
-# Build gp-devenv
+# >>> Removed to use instead nginx default index.html
 # ------------------------------------------------------------------------------
+# # ------------------------------------------------------------------------------
+# # Build gp-devenv
+# # ------------------------------------------------------------------------------
 
-FROM node:18 as build
+# FROM ghcr.io/gp-devenv/gp-angular-devenv:22.04-18-15-1 as build
 
-ENV LATEST_RELEASE_API="https://api.github.com/repos/gp-devenv/gp-devenv-app/releases/latest" 
-ENV ARCHIVE_URL="https://github.com/gp-devenv/gp-devenv-app/archive/refs/tags"
+# ENV LATEST_RELEASE_API="https://api.github.com/repos/gp-devenv/gp-devenv-app/releases/latest" 
+# ENV ARCHIVE_URL="https://github.com/gp-devenv/gp-devenv-app/archive/refs/tags"
 
-# Install requirements
-RUN npm i -g npm@latest @angular/cli@latest
-RUN apt-get update && \
-    apt-get install -y wget && \
-    apt-get autoclean -y && \
-    apt-get autoremove -y
+# # Get sources
+# RUN export LATEST_RELEASE=`curl -s -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" $LATEST_RELEASE_API | grep "tag_name" | sed -e 's/\(.*\)"\(.*\)"\(.*\):\(.*\)"\(.*\)",\(.*\)/\5/'` && \
+#     curl -L -o gp-devenv-app.tar.gz $ARCHIVE_URL/$LATEST_RELEASE.tar.gz && \
+#     tar xfz gp-devenv-app.tar.gz && \
+#     mv gp-devenv-app-$LATEST_RELEASE gp-devenv-app
 
-# Get sources
-RUN mkdir -p /workspace
-WORKDIR /workspace
-RUN export LATEST_RELEASE=`curl -s -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" $LATEST_RELEASE_API | grep "tag_name" | sed -e 's/\(.*\)"\(.*\)"\(.*\):\(.*\)"\(.*\)",\(.*\)/\5/'` && \
-    curl -L -o gp-devenv-app.tar.gz $ARCHIVE_URL/$LATEST_RELEASE.tar.gz && \
-    tar xfz gp-devenv-app.tar.gz && \
-    mv gp-devenv-app-$LATEST_RELEASE gp-devenv-app
-
-# Copy sources and build
-WORKDIR /workspace/gp-devenv-app
-RUN npm ci && \
-    npm run build
+# # Copy sources and build
+# WORKDIR /workspace
+# RUN (cd gp-devenv-app; npm ci && npm run build)
+# ------------------------------------------------------------------------------
+# <<< Removed to use instead nginx default index.html
+# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 # Build gp-base-devenv image
 # ------------------------------------------------------------------------------
 
-FROM ubuntu:22.04 as final
+FROM ubuntu:22.04
 
 LABEL org.opencontainers.image.source=https://github.com/gp-devenv/gp-base-devenv
 LABEL org.opencontainers.image.description "Base image using Ubuntu 22.04 for building VS Code Dev Container"
@@ -146,10 +142,20 @@ RUN apt-get update && \
     apt-get autoclean -y && \
     apt-get autoremove -y
 
-# Copy gp-devenv-dev from build stage
-RUN rm -rf /var/www/html
-COPY --from=build /workspace/gp-devenv-app/dist/gp-devenv-app /var/www/html
-RUN chown -R www-data: /var/www/html
+# # Copy gp-devenv-dev from build stage
+# RUN rm -rf /var/www/html
+# COPY --from=build /workspace/gp-devenv-app/dist/gp-devenv-app /var/www/html
+# RUN chown -R www-data: /var/www/html
+
+# Switch to vs code user
+USER vscode
+WORKDIR /workspace
+
+# Set /workspace as a safe git directory
+RUN git config --global --add safe.directory /workspace
+
+# Back to root
+USER root
 
 EXPOSE 80
 
