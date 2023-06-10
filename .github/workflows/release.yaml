@@ -41,7 +41,7 @@ jobs:
         run: (cd src && ./scripts/buildx/push.sh ${{ matrix.ubuntuVersion }})
   cleanup:
     runs-on: ubuntu-22.04
-    needs: build
+    needs: deploy
     steps:
       - name: Checkout
         uses: actions/checkout@v3
