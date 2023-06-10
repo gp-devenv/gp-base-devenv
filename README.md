@@ -69,7 +69,6 @@ For example:
 
 | Image                                        | Description                               |
 | -------------------------------------------- | ----------------------------------------- |
-| ghcr.io/gp-devenv/gp-base-devenv:22.04       | The latest build using Ubuntu 22.04       |
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1     | The latest build 1.x using Ubuntu 22.04   |
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1.1   | The latest build 1.1.x using Ubuntu 22.04 |
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1.1.0 | The latest build 1.1.0 using Ubuntu 22.04 |

@@ -1,0 +1,87 @@
+#
+# gp-base-devenv
+# Copyright (c) 2023, Greg PFISTER. MIT License.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
+# Build, push and dispatch
+
+name: Schedule (23.04)
+
+on:
+  schedule:
+    - cron: '0 6 * * 1,2,3,4,5'
+
+jobs:
+  deploy:
+    name: Push ghcr.io/gp-devenv/gp-base-devenv
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        ubuntuVersion: ['23.04']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: '1.7.0'
+      - name: Setup buildx
+        run: (cd src && ./scripts/buildx/setup.sh)
+      - name: Authenticating
+        run: echo $GHCR_IO_TOKEN | docker login ghcr.io -u gpfister --password-stdin
+        env:
+          GHCR_IO_TOKEN: ${{ secrets.ghcr_io_token }}
+      - name: Build and push to ghcr.io/gp-devenv/gp-base-devenv:${{ matrix.ubuntuVersion }}
+        run: (cd src && ./scripts/buildx/push.sh $UBUNTU_VERSION)
+        env:
+          UBUNTU_VERSION: ${{ matrix.ubuntuVersion }}
+  # dispatch:
+  #   name: Dispatch to dependant images
+  #   needs: deploy
+  #   runs-on: ubuntu-22.04
+  #   strategy:
+  #     matrix:
+  #       ubuntuVersion: ['23.04']
+  #   steps:
+  #     - name: Dispatch to ghcr.io/gp-devenv/gp-docker-devenv repository (1.x)
+  #       if: success() || failure()
+  #       run: |
+  #         curl -X POST \
+  #              -H "Authorization: Bearer $GHCR_IO_TOKEN" \
+  #              -H "X-Github-Api-Version: 2022-11-28" \
+  #              -H "Content-Type: application/json" \
+  #              https://api.github.com/repos/gp-devenv/gp-docker-devenv/actions/workflows/dispatch.yaml/dispatches \
+  #              --data '{"ref":"master","inputs":{"ubuntuVersion":"${{ matrix.ubuntuVersion }}"}}'
+  #       env:
+  #         GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
+  #     - name: Dispatch to ghcr.io/gp-devenv/gp-node-devenv repository (1.x)
+  #       if: success() || failure()
+  #       run: |
+  #         curl -X POST \
+  #              -H "Authorization: Bearer $GHCR_IO_TOKEN" \
+  #              -H "X-Github-Api-Version: 2022-11-28" \
+  #              -H "Content-Type: application/json" \
+  #              https://api.github.com/repos/gp-devenv/gp-node-devenv/actions/workflows/dispatch.yaml/dispatches \
+  #              --data '{"ref":"master","inputs":{"ubuntuVersion":"${{ matrix.ubuntuVersion }}"}}'
+  #       env:
+  #         GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
+  cleanup:
+    runs-on: ubuntu-22.04
+    needs: deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cleanup
+        uses: gp-devenv/gp-docker-image-cleanup@v1
+        with:
+          runAsUser: gpfister
+          retentionDays: 7
+          token: ${{ secrets.GHCR_IO_TOKEN }}
+          isOwnedByOrganization: true
+# End
