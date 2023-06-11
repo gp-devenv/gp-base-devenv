@@ -1,8 +1,8 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: 'Feature'
-labels: 'enhancement'
+name: Technical task
+about: Code refactoring, CI/CD workflows, ...
+title: 'Task: '
+labels: 'task'
 assignees: ''
 ---
 

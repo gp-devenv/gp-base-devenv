@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #
 # gp-base-devenv
 # Copyright (c) 2023, Greg PFISTER. MIT License.
@@ -11,11 +13,16 @@
 # SOFTWARE.
 #
 
-FROM ghcr.io/gp-devenv/gp-docker-devenv:22.04
+set -e
 
-USER vscode
-WORKDIR /workspace
+if [ ! -f ~/.cache/.setup-1.8.0 ]; then
+    echo "Setup tmux..."
+    tmux -c 'tmux source ~/.tmux.conf'
+    tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'
 
-EXPOSE 80
+    echo "\nSetup vim..."
+    vim --not-a-term +'PlugInstall --sync' +qall 
 
-ENTRYPOINT [ "sudo", "/entrypoint.sh" ]
+    if [ ! -d ~/.cache ]; then mkdir ~/.cache; fi
+    touch ~/.cache/.setup-1.8.0
+fi
