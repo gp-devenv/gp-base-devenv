@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: '1.7.0'
+          ref: '1.8.0'
       - name: Setup buildx
         run: (cd src && ./scripts/buildx/setup.sh)
       - name: Authenticating

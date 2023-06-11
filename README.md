@@ -70,6 +70,7 @@ For example:
 
 | Image                                        | Description                               |
 | -------------------------------------------- | ----------------------------------------- |
+| ghcr.io/gp-devenv/gp-base-devenv:22.04       | The latest build using Ubuntu 22.04       |
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1     | The latest build 1.x using Ubuntu 22.04   |
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1.1   | The latest build 1.1.x using Ubuntu 22.04 |
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1.1.0 | The latest build 1.1.0 using Ubuntu 22.04 |
@@ -236,6 +237,15 @@ make sure the `vscode` is the last one activated.
 **Updating the image:** There is yet no plan to create nighly build, ensuring
 the image is always up to date. Therefore, when building yours from this one,
 run the update process.
+
+<div id="version" />
+
+## Version
+
+|   Image   |   Ubuntu    | amd64 | arm64 | arm/v7 | Daily build |
+| :-------: | :---------: | :---: | :---: | :----: | ----------- |
+|   22:04   | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
+| 22:04-1.x | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
 
 <div id="faq" />
 

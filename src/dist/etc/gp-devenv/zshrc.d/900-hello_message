@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #
 # gp-base-devenv
 # Copyright (c) 2023, Greg PFISTER. MIT License.
@@ -11,11 +13,12 @@
 # SOFTWARE.
 #
 
-FROM ghcr.io/gp-devenv/gp-docker-devenv:22.04
-
-USER vscode
-WORKDIR /workspace
-
-EXPOSE 80
-
-ENTRYPOINT [ "sudo", "/entrypoint.sh" ]
+echo "Welcome to this dev container !"
+echo ""
+echo "For proper display of the shell, please install any Nerd Font and setup you "
+echo "terminal and/or vscode terminal on your computer. DO NOT INSTALL IT ON THIS"
+echo "CONTAINER OR ON A REMOTE HOST."
+echo ""
+echo "  -> Nerd Fonts: https://www.nerdfonts.com"
+echo ""
+echo "Please report any issue to https://github.com/gp-devenv/gp-base-devenv/issues"

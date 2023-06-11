@@ -13,13 +13,7 @@
 # SOFTWARE.
 #
 
-set -e
-
-echo "Setup tmux..."
-tmux -c 'tmux source ~/.tmux.conf'
-tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'
-
-echo "\nSetup vim..."
-vim --not-a-term +'PlugInstall --sync' +qall 
-
-rm $0
+# Run setup
+if [ -f /usr/local/lib/gp-devenv/scripts/setup.sh ]; then
+    eval /usr/local/lib/gp-devenv/scripts/setup.sh
+fi

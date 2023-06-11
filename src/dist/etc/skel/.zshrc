@@ -27,12 +27,12 @@ export LC_ALL="en_US.UTF-8"
 # Starship
 eval "$(starship init zsh)"
 
-# Run setup (only once)
-if [ -f ~/setup.sh ]; then
-    echo "It seems that you are login for the first time or you haven't run the setup script yet"
-    echo ""
-    echo "Run:"
-    echo "    $ ~/setup.sh"
-fi
-
+# Bin
 export PATH=$PATH:~/.bin
+
+# Run script
+for file in `ls /etc/gp-devenv/zshrc.d`; do
+    if [ -f /etc/gp-devenv/zshrc.d/$file ]; then
+        source /etc/gp-devenv/zshrc.d/$file
+    fi
+done
