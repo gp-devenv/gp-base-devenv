@@ -25,9 +25,10 @@ VERSION_MAJOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1/')
 VERSION_MINOR=$(echo $VERSION | sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)$/\1.\2/')
 DOCKERFILE=$(echo "./Dockerfile."$1)
 IMAGE_NAME=$(cat .image_name)
-IMAGE_VERSION="$IMAGE_NAME:$1-$VERSION"
-IMAGE_VERSION_MAJOR="$IMAGE_NAME:$1-$VERSION_MAJOR"
-IMAGE_VERSION_MINOR="$IMAGE_NAME:$1-$VERSION_MINOR"
+IMAGE_BASE_TAG="$IMAGE_NAME:$1"
+IMAGE_VERSION="$IMAGE_BASE_TAG-$VERSION"
+IMAGE_VERSION_MAJOR="$IMAGE_BASE_TAG-$VERSION_MAJOR"
+IMAGE_VERSION_MINOR="$IMAGE_BASE_TAG-$VERSION_MINOR"
 
 if [ ! -f "$DOCKERFILE" ]; then
     echo "Dockerfile '$DOCKERFILE' not found"
@@ -36,6 +37,7 @@ fi
 
 docker buildx build --push \
                     --platform linux/arm64,linux/amd64,linux/arm/v7 \
+                    -t $IMAGE_BASE_TAG \
                     -t $IMAGE_VERSION \
                     -t $IMAGE_VERSION_MAJOR \
                     -t $IMAGE_VERSION_MINOR \

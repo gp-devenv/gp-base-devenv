@@ -1,6 +1,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
 ![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
+![ARM64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)
 ![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
 
 # gp-base-devenv: Build a dev containers for VSCode
@@ -75,9 +76,6 @@ For example:
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1.0   | The latest build 1.0.x using Ubuntu 22.04 |
 | ghcr.io/gp-devenv/gp-base-devenv:22.04-1.0.0 | The latest build 1.0.0 using Ubuntu 22.04 |
 
-In addition, `-arm64` and `-amd64` tags are available, should you need to force
-a specific arch.
-
 For CI/CD, the build version is store in `.version` file. The build version is
 in the format
 [SemVer](https://en.wikipedia.org/wiki/Software_versioning#Semantic_versioning).
@@ -106,8 +104,8 @@ You will need to create a multiarch builder:
 ./src/scripts/buildx/setup.sh
 ```
 
-Up successful completion, it should at least have platforms `linux/arm64` and
-`linux/amd64`:
+On successful completion, it should at least have platforms `linux/arm64`,
+`linux/arm/v7` and `linux/amd64`:
 
 ```sh
 [+] Building 5.8s (1/1) FINISHED
