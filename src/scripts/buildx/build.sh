@@ -37,6 +37,9 @@ fi
 
 docker buildx build --no-cache \
                     --platform linux/arm64,linux/amd64,linux/arm/v7 \
+                    --label org.opencontainers.image.source="https://github.com/gp-devenv/gp-base-devenv" \
+                    --label org.opencontainers.image.description="Base dev container for VS Code running Ubuntu $UBUNTU_VERSION" \
+                    --label org.opencontainers.image.licenses=MIT \
                     -t $IMAGE_BASE_TAG \
                     -t $IMAGE_VERSION \
                     -t $IMAGE_VERSION_MAJOR \

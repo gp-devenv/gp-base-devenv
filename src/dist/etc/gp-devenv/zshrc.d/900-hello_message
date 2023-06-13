@@ -13,6 +13,7 @@
 # SOFTWARE.
 #
 
+clear
 echo "Welcome to this dev container !"
 echo ""
 echo "For proper display of the shell, please install any Nerd Font and setup you "
