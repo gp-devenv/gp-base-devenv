@@ -13,7 +13,7 @@
 
 # Build, push and dispatch
 
-name: Schedule
+name: Daily build
 
 on:
   schedule:

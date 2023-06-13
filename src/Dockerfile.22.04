@@ -43,10 +43,8 @@
 FROM ubuntu:22.04
 
 LABEL org.opencontainers.image.source=https://github.com/gp-devenv/gp-base-devenv
-LABEL org.opencontainers.image.description "Base image using Ubuntu 22.04 for building VS Code Dev Container"
+LABEL org.opencontainers.image.description="Base dev container for VS Code running Ubuntu 22.04"
 LABEL org.opencontainers.image.licenses=MIT
-
-LABEL org.opencontainers.image.description "Base image using Ubuntu for building VS Code Dev Container"
 
 # Timezone
 ENV TZ="Europe/Paris"
