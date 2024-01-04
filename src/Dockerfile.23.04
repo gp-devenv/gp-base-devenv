@@ -60,11 +60,11 @@ RUN rm -rf scripts
 
 # Set the timezone
 RUN apt-get update && \
-    apt-get install tzdata -y
+    apt-get install -y tzdata
 
 # Set locales
 RUN apt-get update && \
-    apt-get install locales && \
+    apt-get install -y locales && \
     dpkg-reconfigure locales
 COPY ./dist/etc/locale.gen /etc/locale.gen
 RUN locale-gen
