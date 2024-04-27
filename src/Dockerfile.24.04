@@ -1,6 +1,6 @@
 #
 # gp-base-devenv
-# Copyright (c) 2023, Greg PFISTER. MIT License.
+# Copyright (c) 2023-2024, Greg PFISTER. MIT License.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -12,38 +12,13 @@
 #
 
 # ------------------------------------------------------------------------------
-# >>> Removed to use instead nginx default index.html
-# ------------------------------------------------------------------------------
-# # ------------------------------------------------------------------------------
-# # Build gp-devenv
-# # ------------------------------------------------------------------------------
-
-# FROM ghcr.io/gp-devenv/gp-angular-devenv:22.04-18-15-1 as build
-
-# ENV LATEST_RELEASE_API="https://api.github.com/repos/gp-devenv/gp-devenv-app/releases/latest" 
-# ENV ARCHIVE_URL="https://github.com/gp-devenv/gp-devenv-app/archive/refs/tags"
-
-# # Get sources
-# RUN export LATEST_RELEASE=`curl -s -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" $LATEST_RELEASE_API | grep "tag_name" | sed -e 's/\(.*\)"\(.*\)"\(.*\):\(.*\)"\(.*\)",\(.*\)/\5/'` && \
-#     curl -L -o gp-devenv-app.tar.gz $ARCHIVE_URL/$LATEST_RELEASE.tar.gz && \
-#     tar xfz gp-devenv-app.tar.gz && \
-#     mv gp-devenv-app-$LATEST_RELEASE gp-devenv-app
-
-# # Copy sources and build
-# WORKDIR /workspace
-# RUN (cd gp-devenv-app; npm ci && npm run build)
-# ------------------------------------------------------------------------------
-# <<< Removed to use instead nginx default index.html
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
 # Build gp-base-devenv image
 # ------------------------------------------------------------------------------
 
-FROM ubuntu:23.04
+FROM ubuntu:24.04
 
 LABEL org.opencontainers.image.source=https://github.com/gp-devenv/gp-base-devenv
-LABEL org.opencontainers.image.description="Base dev container for VS Code running Ubuntu 23.04"
+LABEL org.opencontainers.image.description="Base dev container for VS Code running Ubuntu 24.04"
 LABEL org.opencontainers.image.licenses=MIT
 
 # Timezone

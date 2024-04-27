@@ -1,6 +1,6 @@
 #
 # gp-base-devenv
-# Copyright (c) 2023, Greg PFISTER. MIT License.
+# Copyright (c) 2023-2024, Greg PFISTER. MIT License.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        ubuntuVersion: ['22.04', '23.04']
+        ubuntuVersion: ['22.04', '24.04']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
