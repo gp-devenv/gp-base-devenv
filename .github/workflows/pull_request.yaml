@@ -28,7 +28,7 @@ jobs:
         ubuntuVersion: ['22.04', '24.04']
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup buildx
         run: (cd src && ./scripts/buildx/setup.sh)
       - name: Build using ubuntu:${{ matrix.ubuntuVersion }}
@@ -38,7 +38,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Cleanup
         uses: gp-devenv/gp-docker-image-cleanup@v1
         with:
