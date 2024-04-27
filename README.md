@@ -3,7 +3,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
-[![Ubuntu](https://img.shields.io/badge/ubuntu-23.04-orange)](https://ubuntu.com)
+[![Ubuntu](https://img.shields.io/badge/ubuntu-24.04-orange)](https://ubuntu.com)
+
 ![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
 ![ARM64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)
 ![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
@@ -19,7 +20,7 @@ Copyright (c) 2023, Greg PFISTER. MIT License
 This is a simple Ubuntu container to use as base image for building development
 to be used as Visual Studio Code Remote Container.
 
-This is image is provided with Ubuntu 22.04.
+We build image for Ubuntu 22.04 and 24.04.
 
 Along with the basic requirements, the image provides:
 
@@ -39,12 +40,6 @@ The following image are using this base image:
 
 - [ghcr.io/gp-devenv/gp-node-devenv](https://github.com/gp-devenv/gp-node-devenv/pkgs/container/gp-node-devenv):
   a base image to build a Node.js app in a VS Code dev container
-  - [ghcr.io/gp-devenv/gp-firebase-devenv](https://github.com/gp-devenv/gp-firebase-devenv/pkgs/container/gp-firebase-devenv):
-    a base image to build a Firebase app in a VS Code dev container
-  - [ghcr.io/gp-devenv/gp-angular-devenv](https://github.com/gp-devenv/gp-angular-devenv/pkgs/container/gp-angular-devenv):
-    a base image to build an Angular app in a VS Code dev container
-    - [ghcr.io/gp-devenv/gp-firebase-angular-hosting-devenv](https://github.com/gp-devenv/gp-firebase-angular-hosting-devenv/pkgs/container/gp-firebase-angular-hosting-devenv):
-      a base image to build a Angular app hosted on Firebase in a VS Code dev container
 - [ghcr.io/gp-devenv/gp-docker-devenv](https://github.com/gp-devenv/gp-docker-devenv/pkgs/container/gp-docker-devenv):
   a base image to build a Docker app in a VS Code dev container
 
@@ -149,7 +144,7 @@ To build using a specific Ubuntu version, use:
 (cd scr && ./scripts/dev/image/build.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` must 22.04.
+where `UBUNTU_VERSION` is either 22.04 or 24.04.
 
 It will create an image `ghcr.io/gp-devenv/gp-base-devenv` tagged with the current
 version (see `src/.version` file) and `-dev` suffix.
@@ -175,7 +170,7 @@ To run an interactive container of a give Ubuntu version, simple use:
 (cd src && ./scripts/dev/container/run.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` must 22.04.
+where `UBUNTU_VERSION` is either 22.04 or 24.04.
 
 Alternatively, you can create and start a container to run in background, and
 execute scripts on this container, using the following scripts:
@@ -204,7 +199,7 @@ To scan the image of a give Ubuntu version, simple use:
 (cd src && ./scripts/dev/scan.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` must 22.04.
+where `UBUNTU_VERSION` is either 22.04 or 24.04.
 
 <div id="build-from-this-image" />
 
@@ -248,8 +243,10 @@ run the update process.
 
 |   Image   |   Ubuntu    | amd64 | arm64 | arm/v7 | Daily build |
 | :-------: | :---------: | :---: | :---: | :----: | ----------- |
-|   22:04   | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
-| 22:04-1.x | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
+|   22.04   | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
+| 22.04-1.x | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
+|   24.04   | 24.04 (LTS) |   X   |   X   |   X    | Yes         |
+| 24.04-1.x | 24.04 (LTS) |   X   |   X   |   X    | Yes         |
 
 <div id="faq" />
 
