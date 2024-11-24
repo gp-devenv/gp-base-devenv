@@ -11,7 +11,7 @@
 # SOFTWARE.
 #
 
-version: '3.9'
+name: gp-base-devenv
 
 # Services
 services:
