@@ -52,6 +52,8 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install -y build-essential \
                        python3-venv \
+                       cmake \
+                       ninja-build \
                        automake \
                        autoconf \
                        checkinstall \ 
