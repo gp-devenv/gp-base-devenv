@@ -1,6 +1,6 @@
 #
 # gp-base-devenv
-# Copyright (c) 2023-2024, Greg PFISTER. MIT License.
+# Copyright (c) 2023-2026, Greg PFISTER. MIT License.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -65,11 +65,15 @@ RUN apt-get update && \
                        nmap \
                        zsh \
                        vim \
+                       neovim \
+                       ripgrep \
+                       fzf \
                        git \
-                       unzip \
+                       zip unzip \
                        usbutils \
                        tmux \
                        htop \
+                       btop \
                        neofetch \
                        gdb && \
     apt-get autoclean -y && \
@@ -95,6 +99,7 @@ COPY dist/etc/gp-devenv/zshrc.d /etc/gp-devenv/zshrc.d/
 # Default for users
 WORKDIR /etc/skel
 COPY dist/etc/skel/.zshrc .
+COPY dist/etc/skel/.zprofile .
 COPY dist/etc/skel/.vimrc .
 COPY dist/etc/skel/.tmux.conf .
 COPY dist/etc/skel/.config .config/
@@ -106,6 +111,7 @@ RUN git clone https://github.com/tmux-plugins/tpm /etc/skel/.tmux/plugins/tpm
 WORKDIR /root
 RUN chsh -s /bin/zsh root
 COPY dist/etc/skel/.zshrc .
+COPY dist/etc/skel/.zprofile .
 COPY dist/etc/skel/.vimrc .
 COPY dist/etc/skel/.tmux.conf .
 COPY dist/etc/skel/.config .config/
