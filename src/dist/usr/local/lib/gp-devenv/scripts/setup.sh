@@ -15,7 +15,7 @@
 
 set -e
 
-if [ ! -f ~/.cache/.setup-1.8.0 ]; then
+if [ ! -f ~/.cache/.setup-1.10.0 ]; then
     echo "Setup tmux..."
     tmux -c 'tmux source ~/.tmux.conf'
     tmux -c '~/.tmux/plugins/tpm/bin/install_plugins'
@@ -24,5 +24,5 @@ if [ ! -f ~/.cache/.setup-1.8.0 ]; then
     vim --not-a-term +'PlugInstall --sync' +qall 
 
     if [ ! -d ~/.cache ]; then mkdir ~/.cache; fi
-    touch ~/.cache/.setup-1.8.0
+    touch ~/.cache/.setup-1.10.0
 fi
