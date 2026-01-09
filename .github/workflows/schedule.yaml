@@ -23,7 +23,7 @@ on:
 jobs:
   deploy:
     name: Push ghcr.io/gp-devenv/gp-base-devenv
-    runs-on: ubuntu-22.04
+    runs-on: gp-devenv-runner
     strategy:
       matrix:
         ubuntuVersion: ['22.04', '24.04']
@@ -45,7 +45,7 @@ jobs:
   dispatch:
     name: Dispatch to dependant images
     needs: deploy
-    runs-on: ubuntu-22.04
+    runs-on: gp-devenv-runner
     strategy:
       matrix:
         ubuntuVersion: ['22.04', '24.04']
