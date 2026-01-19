@@ -1,6 +1,6 @@
 #
 # gp-base-devenv
-# Copyright (c) 2023-2024, Greg PFISTER. MIT License.
+# Copyright (c) 2023-2026, Greg PFISTER. MIT License.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,7 +23,7 @@ on:
 jobs:
   deploy:
     name: Push ghcr.io/gp-devenv/gp-base-devenv
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         ubuntuVersion: ['22.04', '24.04']
@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: '1.11.0'
+          ref: '1.12.0'
       - name: Setup buildx
         run: (cd src && ./scripts/buildx/setup.sh)
       - name: Authenticating
@@ -45,7 +45,7 @@ jobs:
   dispatch:
     name: Dispatch to dependant images
     needs: deploy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         ubuntuVersion: ['22.04', '24.04']

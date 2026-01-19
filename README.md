@@ -11,7 +11,7 @@
 
 # gp-base-devenv: Build a dev containers for VSCode
 
-Copyright (c) 2023, Greg PFISTER. MIT License
+Copyright (c) 2023-2026, Greg PFISTER. MIT License
 
 <div id="about" />
 

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #
 # gp-base-devenv
 # Copyright (c) 2023-2026, Greg PFISTER. MIT License.
@@ -11,28 +13,8 @@
 # SOFTWARE.
 #
 
-export USER=vscode
+set -e
 
-# Set up the prompt
-export LANG="en_US.UTF-8"
-export LANGUAGE="en_US.UTF-8"
-export LC_COLLATE="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-export LC_MESSAGES="en_US.UTF-8"
-export LC_MONETARY="en_US.UTF-8"
-export LC_NUMERIC="en_US.UTF-8"
-export LC_TIME="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
+docker buildx prune 
 
-# Starship
-eval "$(starship init zsh)"
-
-# Neofetch
-neofetch
-
-# Run script
-for file in `ls /etc/gp-devenv/zshrc.d`; do
-    if [ -f /etc/gp-devenv/zshrc.d/$file ]; then
-        source /etc/gp-devenv/zshrc.d/$file
-    fi
-done
+# End

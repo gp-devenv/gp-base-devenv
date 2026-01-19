@@ -1,6 +1,6 @@
 #
 # gp-base-devenv
-# Copyright (c) 2023-2024, Greg PFISTER. MIT License.
+# Copyright (c) 2023-2026, Greg PFISTER. MIT License.
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,7 +22,7 @@ on:
 jobs:
   build:
     name: Build ghcr.io/gp-devenv/gp-base-devenv
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         ubuntuVersion: ['22.04', '24.04']
@@ -34,7 +34,7 @@ jobs:
       - name: Build using ubuntu:${{ matrix.ubuntuVersion }}
         run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntuVersion }})
   cleanup:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Checkout
