@@ -22,7 +22,7 @@ on:
 jobs:
   build:
     name: Build ghcr.io/gp-devenv/gp-base-devenv
-    runs-on: gp-devenv-runner
+    runs-on: ubuntu_latest
     strategy:
       matrix:
         ubuntuVersion: ['22.04', '24.04']
@@ -34,7 +34,7 @@ jobs:
       - name: Build using ubuntu:${{ matrix.ubuntuVersion }}
         run: (cd src && ./scripts/buildx/build.sh ${{ matrix.ubuntuVersion }})
   cleanup:
-    runs-on: gp-devenv-runner
+    runs-on: ubuntu_latest
     needs: build
     steps:
       - name: Checkout
