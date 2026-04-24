@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ubuntuVersion: ['22.04', '24.04']
+        ubuntuVersion: ['22.04', '24.04', '26.04']
     steps:
       - name: Dispatch to ghcr.io/gp-devenv/gp-docker-devenv repository
         if: success() || failure()
