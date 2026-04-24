@@ -36,7 +36,7 @@ if [ ! -f "$DOCKERFILE" ]; then
 fi
 
 docker buildx build --push \
-                    --platform linux/arm64,linux/amd64,linux/arm/v7 \
+                    --platform linux/arm64,linux/amd64 \
                     --label org.opencontainers.image.source="https://github.com/gp-devenv/gp-base-devenv" \
                     --label org.opencontainers.image.description="Base dev container for VS Code running Ubuntu $UBUNTU_VERSION" \
                     --label org.opencontainers.image.licenses=MIT \
