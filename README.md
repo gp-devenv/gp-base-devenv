@@ -7,7 +7,6 @@
 [![Ubuntu](https://img.shields.io/badge/ubuntu-26.04-orange)](https://ubuntu.com)
 
 ![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
-![ARM64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)
 ![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
 
 # gp-base-devenv: Build a dev containers for VSCode
