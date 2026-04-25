@@ -19,16 +19,20 @@ on:
   pull_request:
     branches: [master]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build ghcr.io/gp-devenv/gp-base-devenv
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ubuntuVersion: ['22.04', '24.04']
+        ubuntuVersion: ['22.04', '24.04', '26.04']
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup buildx
         run: (cd src && ./scripts/buildx/setup.sh)
       - name: Build using ubuntu:${{ matrix.ubuntuVersion }}
@@ -38,7 +42,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Cleanup
         uses: gp-devenv/gp-docker-image-cleanup@v2
         with:

@@ -27,9 +27,6 @@ export LC_ALL="en_US.UTF-8"
 # Starship
 eval "$(starship init zsh)"
 
-# Neofetch
-neofetch
-
 # Run script
 for file in `ls /etc/gp-devenv/zshrc.d`; do
     if [ -f /etc/gp-devenv/zshrc.d/$file ]; then

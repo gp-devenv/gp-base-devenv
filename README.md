@@ -4,9 +4,9 @@
 
 [![Ubuntu](https://img.shields.io/badge/ubuntu-22.04-orange)](https://ubuntu.com)
 [![Ubuntu](https://img.shields.io/badge/ubuntu-24.04-orange)](https://ubuntu.com)
+[![Ubuntu](https://img.shields.io/badge/ubuntu-26.04-orange)](https://ubuntu.com)
 
 ![ARM64](https://img.shields.io/badge/linux%2farm64-Yes-red)
-![ARM64](https://img.shields.io/badge/linux%2farm%2fv7-Yes-red)
 ![AMD64](https://img.shields.io/badge/linux%2famd64-Yes-red)
 
 # gp-base-devenv: Build a dev containers for VSCode
@@ -20,7 +20,7 @@ Copyright (c) 2023-2026, Greg PFISTER. MIT License
 This is a simple Ubuntu container to use as base image for building development
 to be used as Visual Studio Code Remote Container.
 
-We build image for Ubuntu 22.04 and 24.04.
+We build image for Ubuntu 22.04, 24.04 and 26.04.
 
 Along with the basic requirements, the image provides:
 
@@ -104,8 +104,8 @@ You will need to create a multiarch builder:
 ./src/scripts/buildx/setup.sh
 ```
 
-On successful completion, it should at least have platforms `linux/arm64`,
-`linux/arm/v7` and `linux/amd64`:
+On successful completion, it should at least have platforms `linux/arm64` and
+`linux/amd64`:
 
 ```sh
 [+] Building 5.8s (1/1) FINISHED
@@ -144,7 +144,7 @@ To build using a specific Ubuntu version, use:
 (cd scr && ./scripts/dev/image/build.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` is either 22.04 or 24.04.
+where `UBUNTU_VERSION` is either 22.04, 24.04 or 26.04.
 
 It will create an image `ghcr.io/gp-devenv/gp-base-devenv` tagged with the current
 version (see `src/.version` file) and `-dev` suffix.
@@ -170,7 +170,7 @@ To run an interactive container of a give Ubuntu version, simple use:
 (cd src && ./scripts/dev/container/run.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` is either 22.04 or 24.04.
+where `UBUNTU_VERSION` is either 22.04, 24.04 or 26.04.
 
 Alternatively, you can create and start a container to run in background, and
 execute scripts on this container, using the following scripts:
@@ -199,7 +199,7 @@ To scan the image of a give Ubuntu version, simple use:
 (cd src && ./scripts/dev/scan.sh <UBUNTU_VERSION>)
 ```
 
-where `UBUNTU_VERSION` is either 22.04 or 24.04.
+where `UBUNTU_VERSION` is either 22.04, 24.04 or 26.04.
 
 <div id="build-from-this-image" />
 
@@ -241,12 +241,14 @@ run the update process.
 
 ## Version
 
-|   Image   |   Ubuntu    | amd64 | arm64 | arm/v7 | Daily build |
-| :-------: | :---------: | :---: | :---: | :----: | ----------- |
-|   22.04   | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
-| 22.04-1.x | 22.04 (LTS) |   X   |   X   |   X    | Yes         |
-|   24.04   | 24.04 (LTS) |   X   |   X   |   X    | Yes         |
-| 24.04-1.x | 24.04 (LTS) |   X   |   X   |   X    | Yes         |
+|   Image   |   Ubuntu    | amd64 | arm64 | Daily build |
+| :-------: | :---------: | :---: | :---: | :---------: |
+|   22.04   | 22.04 (LTS) |   X   |   X   |     Yes     |
+| 22.04-1.x | 22.04 (LTS) |   X   |   X   |     Yes     |
+|   24.04   | 24.04 (LTS) |   X   |   X   |     Yes     |
+| 24.04-1.x | 24.04 (LTS) |   X   |   X   |     Yes     |
+|   26.04   | 26.04 (LTS) |   X   |   X   |     Yes     |
+| 26.04-1.x | 26.04 (LTS) |   X   |   X   |     Yes     |
 
 <div id="faq" />
 

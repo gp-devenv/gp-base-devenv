@@ -15,10 +15,10 @@
 # Build gp-base-devenv image
 # ------------------------------------------------------------------------------
 
-FROM ubuntu:24.04
+FROM ubuntu:26.04
 
 LABEL org.opencontainers.image.source=https://github.com/gp-devenv/gp-base-devenv
-LABEL org.opencontainers.image.description="Base dev container for VS Code running Ubuntu 24.04"
+LABEL org.opencontainers.image.description="Base dev container for VS Code running Ubuntu 26.04"
 LABEL org.opencontainers.image.licenses=MIT
 
 # Timezone
