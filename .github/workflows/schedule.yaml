@@ -88,7 +88,7 @@ jobs:
       #   env:
       #     GHCR_IO_TOKEN: ${{secrets.ghcr_io_token}}
       - name: Dispatch to ghcr.io/gp-devenv/gp-ncs-devenv repository
-        if: (success() || failure()) && matrix.ubuntuVersion != '26.04'
+        if: success() || failure()
         run: |
           curl -X POST \
                -H "Authorization: Bearer $GHCR_IO_TOKEN" \
