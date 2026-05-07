@@ -14,7 +14,7 @@ add_newline = true
 
 # Move the directory to the second line
 format = """
-\[[DEVENV](bold green)\] ($username @ $hostname) in $directory$python$nodejs$git_branch
+[{ DEVENV }](bold red) ($username @ $hostname) in $directory$python$nodejs$git_branch
 $time$character 
 """
 
